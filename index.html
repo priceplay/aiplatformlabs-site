@@ -9,6 +9,7 @@
   <style>
     :root{
       --bg0:#05070c;
+      --bg1:#070b12;
       --text:#eaf2ff;
       --muted:rgba(234,242,255,.72);
 
@@ -16,14 +17,14 @@
       --glass2: rgba(16, 22, 32, .28);
       --stroke: rgba(180, 205, 255, .18);
 
-      --cyan: rgba(104, 219, 255, .9);
-      --aqua: rgba(80, 210, 186, .9);
-      --violet: rgba(168, 126, 255, .95);
-      --blue: rgba(90, 160, 255, .95);
+      --cyan: rgba(110,230,255,.92);
+      --aqua: rgba(90,220,190,.92);
+      --violet: rgba(175,140,255,.92);
+      --blue: rgba(90,160,255,.92);
+      --mint: rgba(120,235,170,.92);
 
       --shadow: 0 18px 60px rgba(0,0,0,.55);
       --radius: 26px;
-
       --maxw: 1180px;
     }
 
@@ -31,63 +32,17 @@
     html,body{ height:100%; }
     body{
       margin:0;
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
       color: var(--text);
-      background: var(--bg0);
+      background:
+        radial-gradient(1200px 700px at 15% 10%, rgba(110,230,255,.07), transparent 60%),
+        radial-gradient(1100px 650px at 85% 25%, rgba(175,140,255,.06), transparent 60%),
+        radial-gradient(900px 600px at 50% 90%, rgba(90,220,190,.06), transparent 62%),
+        linear-gradient(180deg, var(--bg0), var(--bg1));
       overflow-x:hidden;
     }
 
-    /* ======== FULL-PAGE HERO IMAGE BACKGROUND ======== */
-    .site-bg{
-      position:fixed;
-      inset:0;
-      z-index:-3;
-      background:
-        radial-gradient(1200px 600px at 12% 20%, rgba(110,230,255,.10), transparent 55%),
-        radial-gradient(1000px 520px at 70% 25%, rgba(160,120,255,.10), transparent 60%),
-        radial-gradient(1100px 520px at 50% 85%, rgba(60,220,190,.10), transparent 60%),
-        linear-gradient(180deg, rgba(0,0,0,.40), rgba(0,0,0,.66)),
-        url("hero.png");
-      background-size: cover;
-      background-position: center;
-      filter:saturate(1.05) contrast(1.03);
-      transform: translateZ(0);
-    }
-
-    /* subtle moving “mist” to make image feel alive (no color split) */
-    .mist{
-      position:fixed;
-      inset:-20%;
-      z-index:-2;
-      background:
-        radial-gradient(600px 380px at 20% 30%, rgba(140,200,255,.10), transparent 60%),
-        radial-gradient(700px 420px at 75% 45%, rgba(170,120,255,.10), transparent 62%),
-        radial-gradient(680px 420px at 40% 80%, rgba(90,220,190,.10), transparent 62%);
-      filter: blur(26px);
-      opacity:.75;
-      animation: mistFloat 18s ease-in-out infinite alternate;
-      pointer-events:none;
-    }
-    @keyframes mistFloat{
-      0%   { transform: translate3d(-1.5%, -1%, 0) scale(1.02); opacity:.70; }
-      50%  { transform: translate3d( 1.2%,  0.8%,0) scale(1.03); opacity:.78; }
-      100% { transform: translate3d(-0.5%,  1.4%,0) scale(1.02); opacity:.72; }
-    }
-
-    /* canvas for random glowing dots */
-    #glowCanvas{
-      position:fixed;
-      inset:0;
-      z-index:-1;
-      pointer-events:none;
-    }
-
-    /* ======== LAYOUT ======== */
-    .wrap{
-      max-width: var(--maxw);
-      margin:0 auto;
-      padding: 0 22px;
-    }
+    .wrap{ max-width: var(--maxw); margin:0 auto; padding: 0 22px; }
 
     /* ======== HEADER ======== */
     header{
@@ -106,13 +61,7 @@
       gap:16px;
       padding: 14px 0;
     }
-
-    .brand{
-      display:flex;
-      align-items:center;
-      gap:12px;
-      min-width: 240px;
-    }
+    .brand{ display:flex; align-items:center; gap:12px; min-width: 240px; }
     .logo{
       width:38px;height:38px;border-radius:14px;
       background:
@@ -122,17 +71,8 @@
       border:1px solid rgba(255,255,255,.14);
       box-shadow: 0 10px 30px rgba(0,0,0,.35);
     }
-    .brand h1{
-      font-size:16px;
-      margin:0;
-      letter-spacing:.2px;
-      line-height:1.15;
-    }
-    .brand p{
-      margin:2px 0 0 0;
-      font-size:12px;
-      color: rgba(234,242,255,.65);
-    }
+    .brand h1{ font-size:16px; margin:0; letter-spacing:.2px; line-height:1.15; }
+    .brand p{ margin:2px 0 0 0; font-size:12px; color: rgba(234,242,255,.65); }
 
     nav a{
       color: rgba(234,242,255,.78);
@@ -140,22 +80,13 @@
       font-size:14px;
       padding: 10px 12px;
       border-radius: 14px;
-      transition: background .2s ease, color .2s ease, transform .2s ease;
+      transition: background .2s ease, color .2s ease;
     }
-    nav a:hover{
-      background: rgba(255,255,255,.06);
-      color: rgba(234,242,255,.92);
-    }
+    nav a:hover{ background: rgba(255,255,255,.06); color: rgba(234,242,255,.92); }
 
-    .navRight{
-      display:flex;
-      align-items:center;
-      gap:10px;
-    }
+    .navRight{ display:flex; align-items:center; gap:10px; }
     .pill{
-      display:flex;
-      align-items:center;
-      gap:10px;
+      display:flex; align-items:center; gap:10px;
       padding:10px 14px;
       border-radius: 999px;
       background: rgba(255,255,255,.05);
@@ -165,7 +96,6 @@
       white-space:nowrap;
     }
 
-    /* PricePlay button: standard glow (not too bright), gentle animation */
     .ppBtn{
       position:relative;
       display:inline-flex;
@@ -177,7 +107,7 @@
       color: rgba(234,242,255,.94);
       border:1px solid rgba(140,200,255,.22);
       background:
-        linear-gradient(90deg, rgba(48,120,255,.20), rgba(140,100,255,.16)),
+        linear-gradient(90deg, rgba(48,120,255,.18), rgba(140,100,255,.14)),
         rgba(255,255,255,.05);
       box-shadow: 0 10px 30px rgba(0,0,0,.30);
       transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
@@ -187,34 +117,22 @@
       content:"";
       position:absolute;
       inset:-40%;
-      background: radial-gradient(circle at 30% 50%, rgba(110,230,255,.20), transparent 60%),
-                  radial-gradient(circle at 70% 50%, rgba(170,120,255,.18), transparent 62%);
+      background:
+        radial-gradient(circle at 30% 50%, rgba(110,230,255,.18), transparent 60%),
+        radial-gradient(circle at 70% 50%, rgba(170,120,255,.16), transparent 62%);
       filter: blur(18px);
-      opacity:.60;
-      animation: ppGlow 3.8s ease-in-out infinite;
+      opacity:.55;
+      animation: ppGlow 4.4s ease-in-out infinite;
     }
     @keyframes ppGlow{
-      0% { transform: translate3d(-2%,0,0) scale(1.02); opacity:.55; }
+      0% { transform: translate3d(-2%,0,0) scale(1.02); opacity:.45; }
       50%{ transform: translate3d( 2%,0,0) scale(1.03); opacity:.70; }
-      100%{transform: translate3d(-2%,0,0) scale(1.02); opacity:.55; }
+      100%{transform: translate3d(-2%,0,0) scale(1.02); opacity:.45; }
     }
-    .ppBtn:hover{
-      transform: translateY(-1px);
-      border-color: rgba(140,200,255,.34);
-      box-shadow: 0 14px 40px rgba(0,0,0,.38);
-    }
-    .ppBtn span{
-      position:relative;
-      z-index:1;
-      font-weight:600;
-    }
-    .ppBtn .arrow{
-      position:relative;
-      z-index:1;
-      opacity:.85;
-    }
+    .ppBtn:hover{ transform: translateY(-1px); border-color: rgba(140,200,255,.34); box-shadow: 0 14px 40px rgba(0,0,0,.38); }
+    .ppBtn span{ position:relative; z-index:1; font-weight:600; }
+    .ppBtn .arrow{ position:relative; z-index:1; opacity:.85; }
 
-    /* Mobile nav */
     .burger{
       display:none;
       border:1px solid rgba(255,255,255,.10);
@@ -224,11 +142,7 @@
       padding:10px 12px;
       cursor:pointer;
     }
-
-    .mobileMenu{
-      display:none;
-      padding: 0 0 14px 0;
-    }
+    .mobileMenu{ display:none; padding: 0 0 14px 0; }
     .mobileMenu a{
       display:block;
       padding: 12px 12px;
@@ -236,46 +150,80 @@
       border-radius: 14px;
       background: rgba(255,255,255,.04);
       border:1px solid rgba(255,255,255,.08);
+      color: rgba(234,242,255,.85);
+      text-decoration:none;
     }
 
-    /* ======== HERO AREA (no hard boundary) ======== */
+    /* ======== HERO SECTION ONLY (image background only here) ======== */
     .hero{
-      padding: 58px 0 28px 0;
+      padding: 46px 0 18px 0;
     }
+
+    .heroStage{
+      position:relative;
+      border-radius: 34px;
+      overflow:hidden;
+
+      /* This is the ONLY place hero.png is used */
+      background:
+        radial-gradient(1200px 700px at 20% 30%, rgba(110,230,255,.10), transparent 60%),
+        radial-gradient(1100px 650px at 80% 40%, rgba(175,140,255,.10), transparent 60%),
+        linear-gradient(180deg, rgba(0,0,0,.30), rgba(0,0,0,.60)),
+        url("hero.png");
+      background-size: cover;
+      background-position: center;
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(255,255,255,.10);
+    }
+
+    /* soft top glow */
+    .heroStage::before{
+      content:"";
+      position:absolute;
+      inset:-30%;
+      background:
+        radial-gradient(700px 420px at 20% 40%, rgba(110,230,255,.10), transparent 60%),
+        radial-gradient(700px 420px at 70% 55%, rgba(175,140,255,.10), transparent 62%);
+      filter: blur(24px);
+      opacity:.75;
+      pointer-events:none;
+      animation: stageMist 16s ease-in-out infinite alternate;
+    }
+    @keyframes stageMist{
+      0%   { transform: translate3d(-1.5%, -1%, 0) scale(1.02); opacity:.60; }
+      100% { transform: translate3d( 1.2%,  1%, 0) scale(1.03); opacity:.78; }
+    }
+
+    /* This canvas is ONLY for the hero block */
+    #heroGlowCanvas{
+      position:absolute;
+      inset:0;
+      width:100%;
+      height:100%;
+      pointer-events:none;
+      z-index:1;
+    }
+
     .heroGrid{
+      position:relative;
+      z-index:2; /* above glow */
       display:grid;
       grid-template-columns: 1.05fr .95fr;
       gap: 22px;
       align-items: stretch;
+      padding: 30px;
     }
 
-    /* glass panels */
     .panel{
       background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
-      border: 1px solid var(--stroke);
+      border: 1px solid rgba(180, 205, 255, .18);
       border-radius: var(--radius);
-      box-shadow: var(--shadow);
       backdrop-filter: blur(14px);
       -webkit-backdrop-filter: blur(14px);
     }
 
     .heroLeft{
       padding: 34px 34px 28px 34px;
-      position:relative;
-      overflow:hidden;
-    }
-
-    /* softer, integrated edge (not boxed) */
-    .heroLeft::before{
-      content:"";
-      position:absolute;
-      inset:-2px;
-      background:
-        radial-gradient(900px 420px at 20% 30%, rgba(110,230,255,.10), transparent 60%),
-        radial-gradient(900px 420px at 80% 60%, rgba(170,120,255,.10), transparent 62%);
-      opacity:.75;
-      filter: blur(12px);
-      pointer-events:none;
     }
 
     .badge{
@@ -287,27 +235,21 @@
       border:1px solid rgba(255,255,255,.12);
       background: rgba(255,255,255,.04);
       color: rgba(234,242,255,.82);
-      position:relative;
-      z-index:1;
       width:fit-content;
     }
     .dot{
       width:8px;height:8px;border-radius:999px;
-      background: rgba(80,210,186,.9);
-      box-shadow: 0 0 18px rgba(80,210,186,.35);
+      background: rgba(90,220,190,.9);
+      box-shadow: 0 0 18px rgba(90,220,190,.35);
     }
 
     .heroTitle{
-      position:relative;
-      z-index:1;
       margin: 18px 0 10px 0;
       font-size: clamp(44px, 6vw, 76px);
       letter-spacing:-1px;
       line-height:1.02;
     }
     .heroDesc{
-      position:relative;
-      z-index:1;
       margin: 0 0 18px 0;
       color: var(--muted);
       font-size: 16px;
@@ -317,15 +259,12 @@
     .heroDesc b{ color: rgba(234,242,255,.92); }
 
     .ctaRow{
-      position:relative;
-      z-index:1;
       display:flex;
       flex-wrap:wrap;
       gap: 12px;
       margin-top: 16px;
       align-items:center;
     }
-
     .btn{
       display:inline-flex;
       align-items:center;
@@ -345,7 +284,6 @@
       background: rgba(255,255,255,.07);
       border-color: rgba(255,255,255,.18);
     }
-
     .btnPrimary{
       border-color: rgba(110,230,255,.20);
       background:
@@ -353,18 +291,9 @@
         rgba(255,255,255,.05);
       box-shadow: 0 10px 35px rgba(0,0,0,.35);
     }
-    .btnPrimary:hover{
-      border-color: rgba(110,230,255,.30);
-    }
+    .btnPrimary:hover{ border-color: rgba(110,230,255,.30); }
 
-    .chips{
-      position:relative;
-      z-index:1;
-      display:flex;
-      flex-wrap:wrap;
-      gap: 10px;
-      margin-top: 16px;
-    }
+    .chips{ display:flex; flex-wrap:wrap; gap: 10px; margin-top: 16px; }
     .chip{
       padding: 10px 12px;
       border-radius: 999px;
@@ -380,7 +309,6 @@
       flex-direction:column;
       gap: 12px;
     }
-
     .miniCard{
       padding: 18px;
       border-radius: 22px;
@@ -395,62 +323,29 @@
       inset:-40%;
       background:
         radial-gradient(circle at 30% 40%, rgba(110,230,255,.10), transparent 60%),
-        radial-gradient(circle at 70% 65%, rgba(170,120,255,.10), transparent 62%);
+        radial-gradient(circle at 70% 65%, rgba(175,140,255,.10), transparent 62%);
       filter: blur(22px);
       opacity:.55;
       pointer-events:none;
       animation: cardGlow 10s ease-in-out infinite alternate;
     }
     @keyframes cardGlow{
-      0% { transform: translate3d(-2%, -1%, 0); opacity:.45; }
-      100%{ transform: translate3d( 2%,  1%, 0); opacity:.60; }
+      0% { transform: translate3d(-2%, -1%, 0); opacity:.40; }
+      100%{ transform: translate3d( 2%,  1%, 0); opacity:.62; }
     }
     .miniCard > *{ position:relative; z-index:1; }
-    .miniTop{
-      display:flex;
-      justify-content:space-between;
-      align-items:flex-start;
-      gap: 12px;
-      margin-bottom: 10px;
-    }
-    .miniTitle{
-      font-weight:800;
-      font-size: 16px;
-      margin: 0;
-    }
-    .miniSub{
-      margin: 4px 0 0 0;
-      color: rgba(234,242,255,.65);
-      font-size: 13px;
-    }
-    .miniText{
-      margin: 0;
-      color: rgba(234,242,255,.72);
-      line-height:1.55;
-      font-size: 14px;
-    }
+    .miniTop{ display:flex; justify-content:space-between; align-items:flex-start; gap: 12px; margin-bottom: 10px; }
+    .miniTitle{ font-weight:800; font-size: 16px; margin: 0; }
+    .miniSub{ margin: 4px 0 0 0; color: rgba(234,242,255,.65); font-size: 13px; }
+    .miniText{ margin: 0; color: rgba(234,242,255,.72); line-height:1.55; font-size: 14px; }
 
-    /* ======== SECTIONS (NO split background; same hero image continues) ======== */
-    section{
-      padding: 32px 0;
-    }
+    /* ======== NORMAL PAGE SECTIONS (NO hero image, NO split colors) ======== */
+    section{ padding: 30px 0; }
 
-    .sectionTitle{
-      font-size: 28px;
-      margin: 0 0 6px 0;
-      letter-spacing:-.3px;
-    }
-    .sectionDesc{
-      margin: 0 0 18px 0;
-      color: rgba(234,242,255,.68);
-      line-height:1.6;
-    }
+    .sectionTitle{ font-size: 28px; margin: 0 0 6px 0; letter-spacing:-.3px; }
+    .sectionDesc{ margin: 0 0 18px 0; color: rgba(234,242,255,.68); line-height:1.6; }
 
-    .grid3{
-      display:grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 14px;
-    }
+    .grid3{ display:grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
     .card{
       padding: 18px;
       border-radius: 22px;
@@ -459,8 +354,6 @@
       backdrop-filter: blur(14px);
       -webkit-backdrop-filter: blur(14px);
       transition: transform .2s ease, border-color .2s ease, background .2s ease;
-      position:relative;
-      overflow:hidden;
     }
     .card:hover{
       transform: translateY(-2px);
@@ -468,26 +361,15 @@
       background: rgba(255,255,255,.05);
     }
 
-    /* subtle different header colors (not bright) */
-    .card h3{
-      margin: 0 0 8px 0;
-      font-size: 16px;
-      letter-spacing:.2px;
-    }
-    .tCyan{ color: rgba(110,230,255,.92); }
-    .tViolet{ color: rgba(175,140,255,.92); }
-    .tAqua{ color: rgba(90,220,190,.92); }
-    .tBlue{ color: rgba(90,160,255,.92); }
-    .tMint{ color: rgba(120,235,170,.92); }
+    .card h3{ margin: 0 0 8px 0; font-size: 16px; letter-spacing:.2px; }
+    .tCyan{ color: var(--cyan); }
+    .tViolet{ color: var(--violet); }
+    .tAqua{ color: var(--aqua); }
+    .tBlue{ color: var(--blue); }
+    .tMint{ color: var(--mint); }
 
-    .card p{
-      margin:0;
-      color: rgba(234,242,255,.72);
-      line-height:1.55;
-      font-size: 14px;
-    }
+    .card p{ margin:0; color: rgba(234,242,255,.72); line-height:1.55; font-size: 14px; }
 
-    /* ======== FOOTER CTA ======== */
     .footerCta{
       display:flex;
       align-items:center;
@@ -511,13 +393,7 @@
       -webkit-backdrop-filter: blur(12px);
       background: rgba(6,10,16,.28);
     }
-    .footRow{
-      display:flex;
-      justify-content:space-between;
-      gap: 12px;
-      align-items:center;
-      flex-wrap:wrap;
-    }
+    .footRow{ display:flex; justify-content:space-between; gap: 12px; align-items:center; flex-wrap:wrap; }
     .backTop{
       color: rgba(234,242,255,.7);
       text-decoration:none;
@@ -528,39 +404,31 @@
     }
     .backTop:hover{ background: rgba(255,255,255,.05); }
 
-    /* ======== RESPONSIVE ======== */
     @media (max-width: 980px){
       nav{ display:none; }
       .burger{ display:inline-flex; }
       .brand{ min-width:auto; }
-      .heroGrid{ grid-template-columns: 1fr; }
+      .heroGrid{ grid-template-columns: 1fr; padding: 18px; }
       .grid3{ grid-template-columns: 1fr; }
       .footerCta{ flex-direction:column; align-items:flex-start; }
       .pill{ display:none; }
     }
-
     @media (max-width: 520px){
       .heroLeft{ padding: 26px 18px 22px 18px; }
       .heroRight{ padding: 14px; }
-      .hero{ padding-top: 36px; }
+      .hero{ padding-top: 28px; }
       .heroDesc{ font-size: 15px; }
       .btn{ width:100%; justify-content:space-between; }
       .ctaRow{ gap:10px; }
     }
 
-    /* Reduced motion */
     @media (prefers-reduced-motion: reduce){
-      .mist, .ppBtn::before, .miniCard::after { animation:none !important; }
+      .heroStage::before, .ppBtn::before, .miniCard::after { animation:none !important; }
     }
   </style>
 </head>
 
 <body>
-  <!-- Full-page background -->
-  <div class="site-bg" aria-hidden="true"></div>
-  <div class="mist" aria-hidden="true"></div>
-  <canvas id="glowCanvas" aria-hidden="true"></canvas>
-
   <header>
     <div class="wrap">
       <div class="nav">
@@ -583,9 +451,7 @@
         </nav>
 
         <div class="navRight">
-          <div class="pill" title="Contact">
-            hello@aiplatformlabs.com
-          </div>
+          <div class="pill">hello@aiplatformlabs.com</div>
 
           <a class="ppBtn" href="https://priceplay.aiplatformlabs.com" target="_blank" rel="noopener">
             <span>PricePlay</span>
@@ -607,78 +473,84 @@
 
   <main id="top">
     <div class="wrap">
+      <!-- HERO IMAGE BACKGROUND ONLY HERE -->
       <section class="hero">
-        <div class="heroGrid">
-          <div class="panel heroLeft">
-            <div class="badge">
-              <span class="dot" aria-hidden="true"></span>
-              <span><b>Built to ship.</b> Built to scale.</span>
-            </div>
+        <div class="heroStage">
+          <canvas id="heroGlowCanvas" aria-hidden="true"></canvas>
 
-            <h2 class="heroTitle">Production.</h2>
-
-            <p class="heroDesc">
-              AI Platform Labs builds high-quality <b>SaaS products</b>, <b>platform systems</b>, <b>applied AI</b>, and <b>IT architecture</b>.
-              We combine real-world delivery discipline with modern product engineering to ship reliable outcomes.
-            </p>
-
-            <div class="ctaRow">
-              <a class="btn btnPrimary" href="https://priceplay.aiplatformlabs.com" target="_blank" rel="noopener">
-                Launch PricePlay <span>→</span>
-              </a>
-              <a class="btn" href="#capabilities">Explore capabilities</a>
-              <a class="btn" href="#contact">Talk to us</a>
-            </div>
-
-            <div class="chips" aria-label="Highlights">
-              <span class="chip">SaaS production discipline</span>
-              <span class="chip">Platform-grade delivery</span>
-              <span class="chip">Security by design</span>
-              <span class="chip">Cloud & automation</span>
-            </div>
-          </div>
-
-          <div class="panel heroRight">
-            <div class="miniCard">
-              <div class="miniTop">
-                <div>
-                  <div class="miniTitle">PricePlay</div>
-                  <div class="miniSub">priceplay.aiplatformlabs.com</div>
-                </div>
-                <a class="btn btnPrimary" style="padding:10px 14px;" href="https://priceplay.aiplatformlabs.com" target="_blank" rel="noopener">
-                  Launch <span>→</span>
-                </a>
+          <div class="heroGrid">
+            <div class="panel heroLeft">
+              <div class="badge">
+                <span class="dot" aria-hidden="true"></span>
+                <span><b>Built to ship.</b> Built to scale.</span>
               </div>
-              <p class="miniText">
-                Store onboarding, verification, or a pilot city launch? Email <b>hello@aiplatformlabs.com</b>.
+
+              <h2 class="heroTitle">Production.</h2>
+
+              <p class="heroDesc">
+                AI Platform Labs builds high-quality <b>SaaS products</b>, <b>platform systems</b>, <b>applied AI</b>, and <b>IT architecture</b>.
+                We combine real-world delivery discipline with modern product engineering to ship reliable outcomes.
               </p>
-            </div>
 
-            <div class="miniCard">
-              <div class="miniTitle">What we deliver</div>
-              <p class="miniText">From roadmap to production: MVP → scale, observability, performance, and cost control.</p>
-              <div class="chips" style="margin-top:12px">
-                <span class="chip">MVP → scale</span>
-                <span class="chip">Observability</span>
-                <span class="chip">Performance</span>
-                <span class="chip">Cost control</span>
+              <div class="ctaRow">
+                <a class="btn btnPrimary" href="https://priceplay.aiplatformlabs.com" target="_blank" rel="noopener">
+                  Launch PricePlay <span>→</span>
+                </a>
+                <a class="btn" href="#capabilities">Explore capabilities</a>
+                <a class="btn" href="#contact">Talk to us</a>
+              </div>
+
+              <div class="chips" aria-label="Highlights">
+                <span class="chip">SaaS production discipline</span>
+                <span class="chip">Platform-grade delivery</span>
+                <span class="chip">Security by design</span>
+                <span class="chip">Cloud & automation</span>
               </div>
             </div>
 
-            <div class="miniCard">
-              <div class="miniTitle">Operating principles</div>
-              <p class="miniText">Reliability & clarity. SLO thinking, secure defaults, clean handover, maintainable systems.</p>
-              <div class="chips" style="margin-top:12px">
-                <span class="chip">SLO thinking</span>
-                <span class="chip">Secure defaults</span>
-                <span class="chip">Clean handover</span>
-                <span class="chip">Maintainable systems</span>
+            <div class="panel heroRight">
+              <div class="miniCard">
+                <div class="miniTop">
+                  <div>
+                    <div class="miniTitle">PricePlay</div>
+                    <div class="miniSub">priceplay.aiplatformlabs.com</div>
+                  </div>
+                  <a class="btn btnPrimary" style="padding:10px 14px;" href="https://priceplay.aiplatformlabs.com" target="_blank" rel="noopener">
+                    Launch <span>→</span>
+                  </a>
+                </div>
+                <p class="miniText">
+                  Store onboarding, verification, or a pilot city launch? Email <b>hello@aiplatformlabs.com</b>.
+                </p>
+              </div>
+
+              <div class="miniCard">
+                <div class="miniTitle">What we deliver</div>
+                <p class="miniText">From roadmap to production: MVP → scale, observability, performance, and cost control.</p>
+                <div class="chips" style="margin-top:12px">
+                  <span class="chip">MVP → scale</span>
+                  <span class="chip">Observability</span>
+                  <span class="chip">Performance</span>
+                  <span class="chip">Cost control</span>
+                </div>
+              </div>
+
+              <div class="miniCard">
+                <div class="miniTitle">Operating principles</div>
+                <p class="miniText">Reliability & clarity. SLO thinking, secure defaults, clean handover, maintainable systems.</p>
+                <div class="chips" style="margin-top:12px">
+                  <span class="chip">SLO thinking</span>
+                  <span class="chip">Secure defaults</span>
+                  <span class="chip">Clean handover</span>
+                  <span class="chip">Maintainable systems</span>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </section>
 
+      <!-- NORMAL SITE BACKGROUND FROM HERE -->
       <section id="capabilities">
         <h3 class="sectionTitle">Capabilities</h3>
         <p class="sectionDesc">
@@ -790,10 +662,8 @@
   </footer>
 
   <script>
-    // Footer year
     document.getElementById('y').textContent = new Date().getFullYear();
 
-    // Mobile menu
     const burgerBtn = document.getElementById('burgerBtn');
     const mobileMenu = document.getElementById('mobileMenu');
     burgerBtn?.addEventListener('click', () => {
@@ -801,121 +671,114 @@
       mobileMenu.style.display = isOpen ? 'none' : 'block';
     });
 
-    // ====== RANDOM GLOWING DOTS (slow + random, no continuous “rain”) ======
-    const canvas = document.getElementById('glowCanvas');
+    // ====== HERO GLOW PARTICLES (visible + random + slow) ======
+    const canvas = document.getElementById('heroGlowCanvas');
     const ctx = canvas.getContext('2d');
 
-    let W = 0, H = 0, DPR = 1;
-    function resize(){
-      DPR = Math.max(1, Math.min(2, window.devicePixelRatio || 1));
-      W = canvas.width = Math.floor(window.innerWidth * DPR);
-      H = canvas.height = Math.floor(window.innerHeight * DPR);
-      canvas.style.width = window.innerWidth + 'px';
-      canvas.style.height = window.innerHeight + 'px';
+    function fitCanvas(){
+      const stage = canvas.parentElement;
+      const rect = stage.getBoundingClientRect();
+      const dpr = Math.max(1, Math.min(2, window.devicePixelRatio || 1));
+
+      canvas.width  = Math.floor(rect.width * dpr);
+      canvas.height = Math.floor(rect.height * dpr);
+      canvas.style.width = rect.width + 'px';
+      canvas.style.height = rect.height + 'px';
+      ctx.setTransform(dpr,0,0,dpr,0,0);
     }
-    window.addEventListener('resize', resize);
-    resize();
+    window.addEventListener('resize', fitCanvas);
+    fitCanvas();
 
-    // Not too many dots; subtle
+    function r(min,max){ return Math.random()*(max-min)+min; }
+
     const dots = [];
-    const DOTS = 42;
+    const DOTS = 70; // more so you can SEE the glow
 
-    function rand(min,max){ return Math.random()*(max-min)+min; }
-
-    function newDot(){
-      // random position anywhere
+    function makeDot(){
       return {
-        x: rand(0, W),
-        y: rand(0, H),
-        r: rand(1.2, 3.4) * DPR,
-        a: rand(0.08, 0.22), // faint
-        hue: Math.random() < 0.55 ? 'rgba(110,230,255,' : (Math.random() < 0.5 ? 'rgba(170,120,255,' : 'rgba(90,220,190,'),
-        // drift slowly
-        vx: rand(-0.05, 0.05) * DPR,
-        vy: rand(-0.04, 0.06) * DPR,
-        // twinkle
-        tw: rand(0.002, 0.009),
-        phase: rand(0, Math.PI*2),
-        // interval behavior: each dot “activates” randomly
-        cooldown: rand(80, 260), // frames
-        activeFor: rand(80, 190), // frames
+        x: r(0, canvas.clientWidth),
+        y: r(0, canvas.clientHeight),
+        r: r(1.4, 3.4),
+        baseA: r(0.10, 0.22), // brighter than before (so it’s visible)
+        vx: r(-0.06, 0.06),
+        vy: r(-0.04, 0.07),
+        phase: r(0, Math.PI*2),
+        tw: r(0.01, 0.03),
+        hue: Math.random() < 0.5 ? 'rgba(110,230,255,' : (Math.random() < 0.5 ? 'rgba(175,140,255,' : 'rgba(90,220,190,'),
+        on: Math.random() < 0.35,
         t: 0,
-        on: Math.random() < 0.35 // only some are initially active
+        cooldown: r(60, 220),
+        activeFor: r(80, 220)
       };
     }
+    for(let i=0;i<DOTS;i++) dots.push(makeDot());
 
-    for(let i=0;i<DOTS;i++) dots.push(newDot());
+    function tick(){
+      const w = canvas.clientWidth;
+      const h = canvas.clientHeight;
 
-    function step(){
-      ctx.clearRect(0,0,W,H);
+      ctx.clearRect(0,0,w,h);
 
-      // draw faint vignette overlay (helps unify image + sections)
+      // Slight dark overlay to make glow pop (very subtle)
       ctx.save();
-      ctx.globalAlpha = 0.30;
-      const g = ctx.createRadialGradient(W*0.5, H*0.45, 0, W*0.5, H*0.45, Math.max(W,H)*0.65);
-      g.addColorStop(0, 'rgba(0,0,0,0)');
-      g.addColorStop(1, 'rgba(0,0,0,1)');
-      ctx.fillStyle = g;
-      ctx.fillRect(0,0,W,H);
+      ctx.globalAlpha = 0.10;
+      ctx.fillStyle = 'black';
+      ctx.fillRect(0,0,w,h);
       ctx.restore();
 
       for(const d of dots){
-        // interval toggling (random “pulses” rather than constant)
         d.t++;
+
+        // interval toggle (random glow bursts)
         if(d.on){
           if(d.t > d.activeFor){
-            d.on = false;
-            d.t = 0;
-            d.cooldown = rand(90, 320);
+            d.on = false; d.t = 0; d.cooldown = r(70, 260);
           }
         } else {
           if(d.t > d.cooldown){
-            d.on = true;
-            d.t = 0;
-            d.activeFor = rand(70, 220);
+            d.on = true; d.t = 0; d.activeFor = r(90, 240);
           }
         }
 
-        // drift
         d.x += d.vx;
         d.y += d.vy;
 
-        // wrap
-        if(d.x < -20) d.x = W + 20;
-        if(d.x > W + 20) d.x = -20;
-        if(d.y < -20) d.y = H + 20;
-        if(d.y > H + 20) d.y = -20;
+        if(d.x < -30) d.x = w + 30;
+        if(d.x > w + 30) d.x = -30;
+        if(d.y < -30) d.y = h + 30;
+        if(d.y > h + 30) d.y = -30;
 
         if(!d.on) continue;
 
-        // twinkle
         d.phase += d.tw;
-        const twinkle = 0.55 + 0.45*Math.sin(d.phase);
+        const tw = 0.55 + 0.45*Math.sin(d.phase);
 
-        // glow
         ctx.save();
         ctx.globalCompositeOperation = 'lighter';
-        ctx.globalAlpha = d.a * twinkle;
 
-        // outer blur glow
+        // OUTER glow
+        ctx.globalAlpha = d.baseA * 0.9 * tw;
         ctx.beginPath();
-        ctx.fillStyle = d.hue + (d.a * 0.7 * twinkle).toFixed(3) + ')';
-        ctx.arc(d.x, d.y, d.r*4.2, 0, Math.PI*2);
+        ctx.fillStyle = d.hue + (d.baseA * 0.9 * tw).toFixed(3) + ')';
+        ctx.arc(d.x, d.y, d.r*5.2, 0, Math.PI*2);
         ctx.fill();
 
-        // inner core
-        ctx.globalAlpha = d.a * 1.2 * twinkle;
+        // CORE
+        ctx.globalAlpha = d.baseA * 1.4 * tw;
         ctx.beginPath();
-        ctx.fillStyle = d.hue + (d.a * 1.2 * twinkle).toFixed(3) + ')';
+        ctx.fillStyle = d.hue + (d.baseA * 1.4 * tw).toFixed(3) + ')';
         ctx.arc(d.x, d.y, d.r, 0, Math.PI*2);
         ctx.fill();
 
         ctx.restore();
       }
 
-      requestAnimationFrame(step);
+      requestAnimationFrame(tick);
     }
-    step();
+    tick();
+
+    // Re-fit after fonts load (sometimes canvas size mismatch)
+    window.addEventListener('load', () => setTimeout(fitCanvas, 50));
   </script>
 </body>
 </html>
