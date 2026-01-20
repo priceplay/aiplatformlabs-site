@@ -17,10 +17,6 @@
       --bg1:#0b1020;
       --text:#eaf0ff;
       --muted:rgba(234,240,255,.72);
-      --card: rgba(255,255,255,.06);
-      --card2: rgba(255,255,255,.08);
-      --stroke: rgba(255,255,255,.12);
-      --stroke2: rgba(255,255,255,.18);
       --shadow: 0 24px 80px rgba(0,0,0,.55);
       --radius: 24px;
       --radius2: 18px;
@@ -46,7 +42,7 @@
     body::before{
       content:"";
       position:fixed;
-      inset:-200px;
+      inset:-220px;
       pointer-events:none;
       z-index:0;
       background:
@@ -221,10 +217,7 @@
     .burger[aria-expanded="true"] span:nth-child(2){opacity:0}
     .burger[aria-expanded="true"] span:nth-child(3){transform: translateY(-6px) rotate(-45deg)}
 
-    .mobileMenu{
-      display:none;
-      padding: 10px 0 18px;
-    }
+    .mobileMenu{display:none; padding: 10px 0 18px;}
     .mobileMenuInner{
       border-radius: 18px;
       background: rgba(255,255,255,.05);
@@ -264,9 +257,10 @@
         radial-gradient(650px 420px at 82% 95%, rgba(90,255,220,.12), transparent 58%),
         url("hero.png");
       background-size: cover;
-      /* FIX: lift the image upward so the girl's head is fully visible */
-      background-position: 70% 22%;
       background-repeat:no-repeat;
+
+      /* Desktop / default: keep head visible */
+      background-position: 70% 20%;
     }
 
     /* Minimal overlay + subtle left gradient (NOT a card) */
@@ -309,6 +303,8 @@
       display:flex;
       align-items:stretch;
       gap: 28px;
+
+      /* Desktop height */
       min-height: 460px;
     }
 
@@ -413,15 +409,33 @@
       background: transparent;
     }
 
-    /* Sections */
-    main{padding: 18px 0 56px}
-
-    .section{ padding: 22px 0; }
+    /* Main content – make it feel more “professional” (spacing, rhythm, structure) */
+    main{padding: 10px 0 64px}
+    .section{
+      padding: 26px 0;
+    }
+    .sectionHeader{
+      display:flex;
+      align-items:flex-end;
+      justify-content:space-between;
+      gap:16px;
+      margin-bottom: 14px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid rgba(255,255,255,.06);
+    }
     .section h2{
-      margin: 0 0 14px;
+      margin: 0;
       font-size: 20px;
       letter-spacing: -0.01em;
     }
+    .sectionHint{
+      margin:0;
+      font-size: 12px;
+      color: rgba(234,240,255,.55);
+      letter-spacing:.02em;
+      white-space:nowrap;
+    }
+
     .grid{
       display:grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -437,7 +451,7 @@
       -webkit-backdrop-filter: blur(12px);
     }
     .card h3{
-      margin:0 0 8px;
+      margin:0 0 10px;
       font-size: 14px;
       letter-spacing:.02em;
       color: rgba(234,240,255,.92);
@@ -455,14 +469,14 @@
       border-radius: 999px;
       border:1px solid rgba(255,255,255,.10);
       background: rgba(255,255,255,.04);
-      color: rgba(234,240,255,.76);
+      color: rgba(234,240,255,.78);
       font-size: 13px;
       line-height:1;
       white-space:nowrap;
     }
 
     .contact{
-      margin-top: 10px;
+      margin-top: 12px;
       border-radius: var(--radius);
       border:1px solid rgba(255,255,255,.12);
       background:
@@ -508,24 +522,59 @@
       .heroTitle{font-size: 46px}
       .heroVisual{justify-content:flex-start}
       .visualSpacer{width: 380px; height: 300px;}
-      /* keep head visible on smaller screens */
-      .stage{ background-position: 72% 18%; }
+      .stage{ background-position: 72% 16%; }
     }
+
+    /* MOBILE: key fixes
+       1) Show girl face better -> shift bg right + up
+       2) Move text slightly DOWN -> add top padding + push text block down
+       3) Reduce empty hero bottom -> smaller min-height + visual spacer height
+       4) Reduce overlay over face -> mobile-specific lighter right-side overlay
+    */
     @media (max-width: 720px){
       .stageInner{
         flex-direction:column;
-        gap: 16px;
+        gap: 14px;
         min-height: 0;
-        padding: 32px 18px;
+        padding: 34px 18px 22px; /* more top padding, tighter bottom */
       }
+
+      /* Text down a bit (so face area stays cleaner) */
+      .heroText{
+        padding: 10px 0 0;
+        margin-top: 10px;
+      }
+
       .heroTitle{font-size: 42px}
-      .heroText{max-width: 100%}
+      .heroSubtitle{font-size: 15px}
+
       .heroVisual{min-width: 0}
-      .visualSpacer{width: 100%; height: 240px;}
+      .visualSpacer{
+        width: 100%;
+        height: 200px; /* less empty space */
+      }
+
+      /* Show face better */
+      .stage{
+        background-position: 84% 8%;
+      }
+
+      /* Reduce overlay intensity on the RIGHT so face is clearer */
+      .stage::before{
+        background:
+          linear-gradient(90deg, rgba(8,10,16,.78) 0%, rgba(8,10,16,.52) 40%, rgba(8,10,16,.10) 72%, rgba(8,10,16,.02) 100%),
+          radial-gradient(900px 420px at 18% 22%, rgba(0,0,0,.34), transparent 58%),
+          linear-gradient(180deg, rgba(255,255,255,.055), rgba(255,255,255,.025));
+      }
+
       .grid{grid-template-columns: 1fr}
+
+      .section{padding: 22px 0;}
+      .sectionHeader{margin-bottom: 12px;}
+      .section h2{font-size: 19px;}
+      .sectionHint{display:none;} /* cleaner on mobile */
+
       .contact{flex-direction:column; align-items:flex-start}
-      /* mobile: shift image up + a bit right so face stays visible */
-      .stage{ background-position: 75% 12%; }
     }
 
     /* Reduce motion support */
@@ -615,6 +664,7 @@
             </div>
           </div>
 
+          <!-- No panel. Just reserved space so the right side of hero.png stays visible. -->
           <div class="heroVisual" aria-hidden="true">
             <div class="visualSpacer"></div>
           </div>
@@ -627,7 +677,10 @@
     <div class="wrap">
 
       <section class="section" id="capabilities">
-        <h2>Capabilities</h2>
+        <div class="sectionHeader">
+          <h2>Capabilities</h2>
+          <p class="sectionHint">Production-grade delivery, end-to-end</p>
+        </div>
         <div class="grid">
           <div class="card">
             <h3>SaaS Production</h3>
@@ -669,7 +722,10 @@
       </section>
 
       <section class="section" id="ai-labs">
-        <h2>AI Labs</h2>
+        <div class="sectionHeader">
+          <h2>AI Labs</h2>
+          <p class="sectionHint">Incubation, data, and automation</p>
+        </div>
         <div class="grid">
           <div class="card">
             <h3>Product Incubation</h3>
@@ -707,7 +763,10 @@
       </section>
 
       <section class="section" id="ai-research">
-        <h2>AI Research</h2>
+        <div class="sectionHeader">
+          <h2>AI Research</h2>
+          <p class="sectionHint">Assistants, retrieval, evaluation</p>
+        </div>
         <div class="grid">
           <div class="card">
             <h3>Applied Assistants</h3>
@@ -745,7 +804,10 @@
       </section>
 
       <section class="section" id="it-architecture">
-        <h2>IT Architecture</h2>
+        <div class="sectionHeader">
+          <h2>IT Architecture</h2>
+          <p class="sectionHint">Governance, ops, handover</p>
+        </div>
         <div class="grid">
           <div class="card">
             <h3>Architecture & Governance</h3>
@@ -833,7 +895,7 @@
       a.addEventListener("click", () => setMenu(false));
     });
 
-    // Canvas glow particles (hero only) — more visible + multiple slow “blink” glows
+    // Canvas glow particles (hero only) — visible + multiple slow “blink” glows
     (function(){
       const stage = document.getElementById("heroStage");
       const canvas = document.getElementById("heroParticles");
@@ -856,39 +918,35 @@
         canvas.style.height = h + "px";
         ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       }
-
       function rand(min, max){ return min + Math.random() * (max - min); }
 
       function makeDot(){
         const biasRight = Math.random() < 0.68;
         const x = biasRight ? rand(w * 0.30, w) : rand(0, w);
         const y = rand(0, h);
-
         return {
           x, y,
           r: rand(0.9, 2.3),
           vx: rand(-0.10, 0.10),
           vy: rand(-0.06, 0.06),
           hue: rand(205, 285),
-          base: rand(0.20, 0.42),         // more visible than before (still classy)
+          base: rand(0.20, 0.42),
           phase: rand(0, Math.PI * 2),
-          tw: rand(0.55, 1.05),           // slow twinkle speed
+          tw: rand(0.55, 1.05),
         };
       }
 
       function makeBloom(){
-        // Bigger glow orbs that “blink” slowly (what you asked for)
         const biasRight = Math.random() < 0.80;
         const x = biasRight ? rand(w * 0.46, w) : rand(w * 0.25, w);
         const y = rand(h * 0.10, h * 0.90);
-
         return {
           x, y,
           r: rand(18, 46),
           hue: rand(205, 285),
           base: rand(0.08, 0.18),
           phase: rand(0, Math.PI * 2),
-          blink: rand(0.18, 0.32),        // VERY slow blink speed
+          blink: rand(0.18, 0.32),
           driftX: rand(-0.05, 0.05),
           driftY: rand(-0.03, 0.03),
         };
@@ -897,12 +955,8 @@
       function init(){
         dots = [];
         blooms = [];
-
-        // Dot count scales with area (kept classy but visible)
         const dotCount = Math.max(42, Math.min(92, Math.floor((w * h) / 10000)));
         for(let i=0;i<dotCount;i++) dots.push(makeDot());
-
-        // Multiple slow blinking glows
         const bloomCount = Math.max(6, Math.min(12, Math.floor((w * h) / 65000)));
         for(let i=0;i<bloomCount;i++) blooms.push(makeBloom());
       }
@@ -911,22 +965,16 @@
       function draw(now){
         const t = (now - t0) / 1000;
         ctx.clearRect(0, 0, w, h);
-
-        // Additive look without blowing out
         ctx.globalCompositeOperation = "lighter";
 
-        // 1) Blooms (slow blinking glows)
         for(const b of blooms){
           b.x += b.driftX;
           b.y += b.driftY;
-
-          // wrap gently
           if(b.x < -80) b.x = w + 80;
           if(b.x > w + 80) b.x = -80;
           if(b.y < -80) b.y = h + 80;
           if(b.y > h + 80) b.y = -80;
 
-          // slow blink curve (smooth, not harsh)
           const pulse = 0.5 + 0.5 * Math.sin((t * b.blink) * (Math.PI * 2) + b.phase);
           const a = b.base * (0.55 + 0.90 * pulse);
 
@@ -940,18 +988,15 @@
           ctx.fill();
         }
 
-        // 2) Dots (subtle twinkle)
         for(const p of dots){
           p.x += p.vx;
           p.y += p.vy;
-
-          // wrap
           if(p.x < -20) p.x = w + 20;
           if(p.x > w + 20) p.x = -20;
           if(p.y < -20) p.y = h + 20;
           if(p.y > h + 20) p.y = -20;
 
-          const tw = 0.5 + 0.5 * Math.sin(t * p.tw + p.phase); // slow twinkle
+          const tw = 0.5 + 0.5 * Math.sin(t * p.tw + p.phase);
           const a = p.base * (0.35 + 0.85 * tw);
 
           const grad = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.r * 7);
@@ -968,7 +1013,6 @@
         raf = requestAnimationFrame(draw);
       }
 
-      // Run only when hero is on screen
       let running = false;
       const io = new IntersectionObserver((entries) => {
         for(const e of entries){
@@ -990,16 +1034,12 @@
         }
       }, { threshold: 0.12 });
 
-      window.addEventListener("resize", () => {
-        resize();
-        init();
-      });
+      window.addEventListener("resize", () => { resize(); init(); });
 
       resize();
       init();
       io.observe(stage);
 
-      // Reduced motion: render a single visible frame (no blinking)
       if(prefersReduced){
         resize();
         init();
