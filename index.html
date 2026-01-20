@@ -1,810 +1,950 @@
 <!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AI Platform Labs — Production-grade engineering</title>
-  <meta
-    name="description"
-    content="AI Platform Labs builds production-grade SaaS, platforms, applied AI research, and IT architecture — engineered for reliability and scale."
-  />
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI Platform Labs — Production-grade engineering</title>
+    <meta
+      name="description"
+      content="AI Platform Labs builds production-grade SaaS, platform systems, applied AI, and IT architecture — engineered for reliability, clarity, and scale."
+    />
+    <meta name="theme-color" content="#070b0a" />
 
-  <!-- Optional: nicer font (safe fallback if blocked) -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+      :root {
+        --bg0: #060808;
+        --bg1: #070b0a;
+        --text: rgba(234, 244, 242, 0.92);
+        --muted: rgba(214, 232, 228, 0.72);
+        --faint: rgba(214, 232, 228, 0.55);
 
-  <style>
-    :root{
-      /* Matrix-corporate palette */
-      --bg0:#05070b;
-      --bg1:#071018;
-      --glass: rgba(255,255,255,0.06);
-      --glass2: rgba(255,255,255,0.08);
-      --border: rgba(255,255,255,0.12);
-      --border2: rgba(110,255,175,0.18);
-      --text: rgba(240,248,255,0.92);
-      --muted: rgba(210,230,255,0.72);
-      --muted2: rgba(210,230,255,0.55);
+        --glass: rgba(12, 18, 16, 0.52);
+        --glass2: rgba(10, 16, 14, 0.44);
+        --stroke: rgba(170, 210, 198, 0.14);
+        --stroke2: rgba(170, 210, 198, 0.10);
 
-      --matrix: rgba(115, 255, 175, 0.90);
-      --matrixDim: rgba(115, 255, 175, 0.35);
+        /* Global accent (used for micro highlights) */
+        --acc: rgba(120, 255, 170, 0.20);
+        --acc2: rgba(120, 255, 170, 0.12);
 
-      --shadow: 0 24px 90px rgba(0,0,0,0.55);
-      --shadow2: 0 14px 50px rgba(0,0,0,0.45);
+        /* Section accents (muted, not bright) */
+        --acc-cap: rgba(120, 255, 170, 0.18);   /* Capabilities */
+        --acc-labs: rgba(130, 170, 255, 0.18);  /* AI Labs */
+        --acc-research: rgba(220, 150, 255, 0.16); /* AI Research */
+        --acc-arch: rgba(255, 190, 120, 0.16);  /* IT Architecture */
+        --acc-contact: rgba(120, 230, 255, 0.16); /* Contact */
 
-      --radius: 20px;
-      --radius2: 28px;
+        --shadow: 0 18px 70px rgba(0, 0, 0, 0.55);
+        --shadowSoft: 0 10px 36px rgba(0, 0, 0, 0.42);
+        --radius-xl: 26px;
+        --radius-lg: 18px;
+        --radius-md: 14px;
 
-      --max: 1160px;
-    }
+        --max: 1120px;
+      }
 
-    *{ box-sizing:border-box; }
-    html, body { height:100%; }
-    body{
-      margin:0;
-      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      color: var(--text);
-      background: radial-gradient(1100px 700px at 20% 10%, rgba(115,255,175,0.10), transparent 55%),
-                  radial-gradient(900px 500px at 80% 25%, rgba(120,170,255,0.10), transparent 55%),
-                  radial-gradient(900px 600px at 40% 90%, rgba(160,120,255,0.10), transparent 60%),
-                  linear-gradient(180deg, var(--bg0), var(--bg1));
-      overflow-x:hidden;
-    }
+      * { box-sizing: border-box; }
+      html, body { height: 100%; }
+      body {
+        margin: 0;
+        font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+        color: var(--text);
+        background: radial-gradient(1200px 800px at 30% 20%, rgba(120,255,170,0.08), transparent 60%),
+                    radial-gradient(1100px 700px at 70% 30%, rgba(130,170,255,0.07), transparent 58%),
+                    radial-gradient(1000px 700px at 60% 80%, rgba(220,150,255,0.05), transparent 55%),
+                    linear-gradient(180deg, var(--bg1), var(--bg0));
+        overflow-x: hidden;
+      }
 
-    /* Matrix canvas */
-    #matrix{
-      position:fixed;
-      inset:0;
-      width:100%;
-      height:100%;
-      z-index:-2;
-      opacity:0.42;             /* subtle */
-      filter: blur(0.2px) saturate(1.05);
-    }
+      /* Matrix canvas (background) */
+      #matrix {
+        position: fixed;
+        inset: 0;
+        z-index: 0;
+        pointer-events: none;
+        opacity: 0.38; /* slightly faded globally */
+      }
 
-    /* Vignette + gradient overlay to keep it corporate */
-    .overlay{
-      position:fixed;
-      inset:0;
-      z-index:-1;
-      pointer-events:none;
-      background:
-        radial-gradient(900px 650px at 50% 0%, rgba(0,0,0,0.0), rgba(0,0,0,0.35) 60%, rgba(0,0,0,0.62) 100%),
-        linear-gradient(180deg, rgba(0,0,0,0.25), rgba(0,0,0,0.55));
-    }
+      /* Soft vignette to keep it corporate */
+      .vignette {
+        position: fixed;
+        inset: 0;
+        z-index: 1;
+        pointer-events: none;
+        background:
+          radial-gradient(1200px 800px at 50% 35%, transparent 0%, rgba(0,0,0,0.38) 60%, rgba(0,0,0,0.62) 100%),
+          linear-gradient(180deg, rgba(0,0,0,0.35), rgba(0,0,0,0.55));
+        mix-blend-mode: normal;
+      }
 
-    /* Top nav */
-    header{
-      position:sticky;
-      top:0;
-      z-index:50;
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
-      background: rgba(5, 7, 11, 0.55);
-      border-bottom: 1px solid rgba(255,255,255,0.08);
-    }
+      /* Layout */
+      .wrap {
+        position: relative;
+        z-index: 2;
+      }
 
-    .nav{
-      max-width: var(--max);
-      margin:0 auto;
-      padding: 14px 18px;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:14px;
-    }
+      .container {
+        width: min(var(--max), calc(100% - 40px));
+        margin: 0 auto;
+      }
 
-    .brand{
-      display:flex; align-items:center; gap:12px;
-      min-width: 240px;
-    }
-    .logo{
-      width:36px; height:36px;
-      border-radius: 12px;
-      background:
-        radial-gradient(12px 12px at 30% 30%, rgba(255,255,255,0.35), transparent 60%),
-        radial-gradient(18px 16px at 70% 70%, rgba(115,255,175,0.22), transparent 60%),
-        linear-gradient(135deg, rgba(115,255,175,0.26), rgba(120,170,255,0.18));
-      border: 1px solid rgba(255,255,255,0.16);
-      box-shadow: 0 10px 30px rgba(0,0,0,0.35);
-    }
-    .brand h1{
-      margin:0;
-      font-size: 15px;
-      letter-spacing: 0.2px;
-      line-height: 1.0;
-      font-weight: 700;
-    }
-    .brand p{
-      margin:2px 0 0 0;
-      font-size: 12px;
-      color: var(--muted2);
-      font-weight: 500;
-    }
+      /* Top nav */
+      .nav {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        padding: 14px 0;
+        backdrop-filter: blur(14px);
+        -webkit-backdrop-filter: blur(14px);
+        background: rgba(6, 10, 9, 0.40);
+        border-bottom: 1px solid rgba(170, 210, 198, 0.10);
+      }
 
-    .navlinks{
-      display:flex;
-      align-items:center;
-      gap:18px;
-      flex:1;
-      justify-content:center;
-    }
-    .navlinks a{
-      text-decoration:none;
-      color: rgba(230,240,255,0.78);
-      font-weight: 600;
-      font-size: 13px;
-      letter-spacing: 0.2px;
-      padding: 8px 10px;
-      border-radius: 12px;
-      transition: background .2s ease, color .2s ease;
-    }
-    .navlinks a:hover{
-      background: rgba(255,255,255,0.06);
-      color: rgba(245,255,250,0.92);
-    }
+      .navRow {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+      }
 
-    .navright{
-      display:flex; align-items:center; gap:10px;
-      min-width: 240px;
-      justify-content:flex-end;
-    }
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        min-width: 240px;
+      }
 
-    .chip{
-      display:inline-flex;
-      align-items:center;
-      padding: 9px 12px;
-      border-radius: 999px;
-      border: 1px solid rgba(255,255,255,0.12);
-      background: rgba(255,255,255,0.06);
-      color: rgba(230,240,255,0.78);
-      font-weight: 600;
-      font-size: 13px;
-      text-decoration:none;
-    }
-    .chip:hover{
-      border-color: rgba(255,255,255,0.18);
-    }
+      .logo {
+        width: 38px;
+        height: 38px;
+        border-radius: 12px;
+        background: radial-gradient(18px 18px at 30% 25%, rgba(120,255,170,0.35), transparent 60%),
+                    radial-gradient(22px 22px at 70% 70%, rgba(130,170,255,0.35), transparent 60%),
+                    rgba(12, 18, 16, 0.55);
+        border: 1px solid rgba(170, 210, 198, 0.14);
+        box-shadow: 0 10px 26px rgba(0,0,0,0.35);
+      }
 
-    /* PricePlay always-glow, NOT too bright */
-    .priceplay-btn{
-      display:inline-flex;
-      align-items:center;
-      gap:10px;
-      padding: 10px 14px;
-      border-radius: 999px;
-      border: 1px solid rgba(115,255,175,0.20);
-      background: rgba(10, 18, 16, 0.55);
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
-      color: rgba(235,255,246,0.92);
-      font-weight: 800;
-      font-size: 13px;
-      text-decoration:none;
-      letter-spacing: 0.15px;
+      .brandText {
+        display: flex;
+        flex-direction: column;
+        line-height: 1.1;
+      }
+      .brandText strong {
+        font-size: 16px;
+        letter-spacing: 0.2px;
+      }
+      .brandText span {
+        font-size: 13px;
+        color: var(--muted);
+        margin-top: 2px;
+      }
 
-      /* constant subtle glow */
-      box-shadow:
-        0 0 0 1px rgba(115,255,175,0.08) inset,
-        0 0 20px rgba(115,255,175,0.16),
-        0 0 52px rgba(115,255,175,0.10);
-      transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease, background .18s ease;
-      animation: none !important;
-      outline: none;
-    }
-    .priceplay-btn:hover{
-      transform: translateY(-1px);
-      background: rgba(10, 18, 16, 0.62);
-      border-color: rgba(115,255,175,0.32);
-      box-shadow:
-        0 0 0 1px rgba(115,255,175,0.12) inset,
-        0 0 24px rgba(115,255,175,0.18),
-        0 0 70px rgba(115,255,175,0.12);
-    }
-    .priceplay-btn .pill{
-      padding: 6px 10px;
-      border-radius: 999px;
-      background: rgba(255,255,255,0.06);
-      border: 1px solid rgba(255,255,255,0.10);
-      font-weight: 800;
-    }
+      .navLinks {
+        display: flex;
+        gap: 18px;
+        align-items: center;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
 
-    /* Layout */
-    main{
-      max-width: var(--max);
-      margin:0 auto;
-      padding: 36px 18px 70px;
-    }
+      .navLinks a {
+        color: var(--muted);
+        text-decoration: none;
+        font-size: 14px;
+        padding: 8px 10px;
+        border-radius: 12px;
+        border: 1px solid transparent;
+        transition: background .18s ease, border-color .18s ease, color .18s ease, transform .18s ease;
+        position: relative;
+      }
 
-    .hero{
-      display:grid;
-      grid-template-columns: 1.2fr 0.8fr;
-      gap: 18px;
-      margin-top: 18px;
-      align-items: stretch;
-    }
+      .navLinks a:hover {
+        color: var(--text);
+        background: rgba(12, 18, 16, 0.34);
+        border-color: rgba(170, 210, 198, 0.12);
+        transform: translateY(-1px);
+      }
 
-    .glass{
-      position:relative;
-      border-radius: var(--radius2);
-      border: 1px solid rgba(255,255,255,0.12);
-      background: linear-gradient(180deg, rgba(255,255,255,0.07), rgba(255,255,255,0.05));
-      box-shadow: var(--shadow);
-      overflow:hidden;
-    }
-    .glass::before{
-      content:"";
-      position:absolute;
-      inset:-2px;
-      background: radial-gradient(560px 260px at var(--mx, 20%) var(--my, 20%), rgba(115,255,175,0.14), transparent 55%),
-                  radial-gradient(520px 260px at calc(var(--mx, 20%) + 30%) calc(var(--my, 20%) + 35%), rgba(120,170,255,0.10), transparent 60%);
-      opacity:0.9;
-      pointer-events:none;
-    }
-    .glass::after{
-      content:"";
-      position:absolute;
-      inset:0;
-      background: radial-gradient(900px 600px at 0% 0%, rgba(255,255,255,0.05), transparent 60%);
-      pointer-events:none;
-    }
+      .navRight {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        justify-content: flex-end;
+        min-width: 260px;
+      }
 
-    .hero-left{
-      padding: 44px 42px;
-      min-height: 420px;
-    }
-    .hero-right{
-      padding: 26px 26px;
-      min-height: 420px;
-      display:flex;
-      flex-direction:column;
-      gap: 14px;
-    }
+      .pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 12px;
+        border-radius: 999px;
+        background: rgba(12, 18, 16, 0.38);
+        border: 1px solid rgba(170, 210, 198, 0.12);
+        color: rgba(214,232,228,0.78);
+        font-size: 13px;
+        text-decoration: none;
+        white-space: nowrap;
+      }
 
-    .kicker{
-      display:inline-flex;
-      align-items:center;
-      gap:10px;
-      padding: 8px 12px;
-      border-radius: 999px;
-      border: 1px solid rgba(255,255,255,0.12);
-      background: rgba(255,255,255,0.06);
-      width: fit-content;
-      color: rgba(235,255,246,0.82);
-      font-weight: 700;
-      font-size: 13px;
-      letter-spacing: 0.2px;
-    }
-    .dot{
-      width:8px; height:8px;
-      border-radius: 999px;
-      background: rgba(115,255,175,0.85);
-      box-shadow: 0 0 20px rgba(115,255,175,0.35);
-    }
+      /* PricePlay CTA – subtle, standard, always premium */
+      .cta {
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 11px 14px;
+        border-radius: 999px;
+        color: rgba(234,244,242,0.95);
+        text-decoration: none;
+        font-weight: 650;
+        font-size: 14px;
+        border: 1px solid rgba(120,255,170,0.18);
+        background: rgba(10, 16, 14, 0.55);
+        backdrop-filter: blur(14px);
+        -webkit-backdrop-filter: blur(14px);
+        box-shadow:
+          0 0 0 1px rgba(120,255,170,0.06) inset,
+          0 0 22px rgba(120,255,170,0.12),
+          0 10px 30px rgba(0,0,0,0.28);
+        transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease;
+        overflow: hidden;
+      }
 
-    h2{
-      margin: 16px 0 12px;
-      font-size: 60px;
-      line-height: 0.95;
-      letter-spacing: -1.4px;
-    }
-    .lead{
-      color: var(--muted);
-      font-size: 17px;
-      line-height: 1.65;
-      max-width: 62ch;
-      margin: 0 0 18px 0;
-    }
+      /* Subtle shimmer (standard) – not bright */
+      .cta::before{
+        content:"";
+        position:absolute;
+        inset:-40%;
+        background: linear-gradient(90deg,
+          transparent 0%,
+          rgba(255,255,255,0.10) 45%,
+          rgba(255,255,255,0.18) 50%,
+          rgba(255,255,255,0.10) 55%,
+          transparent 100%);
+        transform: translateX(-60%) rotate(8deg);
+        opacity: 0.28;
+        animation: shimmer 5.8s ease-in-out infinite;
+        pointer-events:none;
+      }
 
-    .cta-row{
-      display:flex;
-      flex-wrap:wrap;
-      gap: 10px;
-      margin-top: 18px;
-    }
+      @keyframes shimmer{
+        0%, 55% { transform: translateX(-70%) rotate(8deg); opacity: 0.10; }
+        70% { opacity: 0.22; }
+        100% { transform: translateX(80%) rotate(8deg); opacity: 0.10; }
+      }
 
-    .btn{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      gap:10px;
-      padding: 12px 16px;
-      border-radius: 999px;
-      border: 1px solid rgba(255,255,255,0.14);
-      background: rgba(255,255,255,0.06);
-      color: rgba(240,248,255,0.88);
-      text-decoration:none;
-      font-weight: 800;
-      letter-spacing: 0.2px;
-      transition: transform .18s ease, border-color .18s ease, background .18s ease;
-      box-shadow: var(--shadow2);
-    }
-    .btn:hover{
-      transform: translateY(-1px);
-      border-color: rgba(255,255,255,0.22);
-      background: rgba(255,255,255,0.08);
-    }
+      .cta:hover{
+        transform: translateY(-1px);
+        border-color: rgba(120,255,170,0.28);
+        box-shadow:
+          0 0 0 1px rgba(120,255,170,0.08) inset,
+          0 0 26px rgba(120,255,170,0.16),
+          0 14px 40px rgba(0,0,0,0.32);
+      }
 
-    .btn.primary{
-      border-color: rgba(115,255,175,0.22);
-      background: rgba(10, 18, 16, 0.45);
-      box-shadow:
-        0 0 0 1px rgba(115,255,175,0.08) inset,
-        0 0 18px rgba(115,255,175,0.14),
-        0 0 60px rgba(115,255,175,0.08);
-    }
-    .btn.primary:hover{
-      border-color: rgba(115,255,175,0.35);
-      background: rgba(10, 18, 16, 0.56);
-      box-shadow:
-        0 0 0 1px rgba(115,255,175,0.12) inset,
-        0 0 24px rgba(115,255,175,0.16),
-        0 0 80px rgba(115,255,175,0.10);
-    }
+      .ctaBadge {
+        display: inline-flex;
+        align-items: center;
+        padding: 6px 10px;
+        border-radius: 999px;
+        border: 1px solid rgba(170, 210, 198, 0.12);
+        background: rgba(10, 16, 14, 0.35);
+        font-weight: 700;
+        letter-spacing: 0.2px;
+      }
 
-    .tags{
-      display:flex;
-      flex-wrap:wrap;
-      gap:8px;
-      margin-top: 16px;
-    }
-    .tag{
-      padding: 8px 10px;
-      border-radius: 999px;
-      border: 1px solid rgba(255,255,255,0.12);
-      background: rgba(255,255,255,0.05);
-      color: rgba(220,235,255,0.70);
-      font-weight: 700;
-      font-size: 12px;
-      letter-spacing: 0.15px;
-    }
+      .arrow {
+        opacity: 0.85;
+      }
 
-    /* Right panel cards */
-    .panel-card{
-      border-radius: 18px;
-      border: 1px solid rgba(255,255,255,0.12);
-      background: rgba(255,255,255,0.05);
-      box-shadow: var(--shadow2);
-      padding: 16px 16px;
-      position:relative;
-      overflow:hidden;
-    }
-    .panel-card::before{
-      content:"";
-      position:absolute;
-      inset:-2px;
-      background: radial-gradient(380px 200px at var(--mx, 20%) var(--my, 20%), rgba(115,255,175,0.14), transparent 60%);
-      opacity:0.75;
-      pointer-events:none;
-    }
-    .panel-title{
-      margin:0;
-      font-weight: 900;
-      font-size: 14px;
-      letter-spacing: 0.2px;
-    }
-    .panel-sub{
-      margin: 4px 0 12px;
-      color: rgba(210,230,255,0.70);
-      font-weight: 600;
-      font-size: 12px;
-      letter-spacing: 0.15px;
-    }
+      /* Hero */
+      .hero {
+        padding: 52px 0 26px;
+      }
 
-    .panel-row{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap: 10px;
-    }
+      .heroGrid {
+        display: grid;
+        grid-template-columns: 1.15fr 0.85fr;
+        gap: 18px;
+        align-items: stretch;
+      }
 
-    /* Sections */
-    section{
-      margin-top: 34px;
-    }
-    .section-title{
-      margin:0;
-      font-size: 22px;
-      letter-spacing: -0.3px;
-    }
-    .section-desc{
-      margin: 8px 0 0 0;
-      color: var(--muted2);
-      line-height: 1.6;
-      max-width: 80ch;
-    }
+      .card {
+        background: var(--glass);
+        border: 1px solid var(--stroke);
+        border-radius: var(--radius-xl);
+        box-shadow: var(--shadow);
+        backdrop-filter: blur(18px);
+        -webkit-backdrop-filter: blur(18px);
+        position: relative;
+        overflow: hidden;
+      }
 
-    .grid{
-      display:grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 14px;
-      margin-top: 16px;
-    }
-    .card{
-      border-radius: var(--radius);
-      border: 1px solid rgba(255,255,255,0.12);
-      background: rgba(255,255,255,0.05);
-      padding: 18px 18px;
-      box-shadow: var(--shadow2);
-      position:relative;
-      overflow:hidden;
-      transition: transform .18s ease, border-color .18s ease, background .18s ease;
-    }
-    .card::before{
-      content:"";
-      position:absolute;
-      inset:-2px;
-      background: radial-gradient(420px 240px at var(--mx, 20%) var(--my, 20%), rgba(115,255,175,0.12), transparent 60%),
-                  radial-gradient(420px 240px at calc(var(--mx, 20%) + 30%) calc(var(--my, 20%) + 30%), rgba(120,170,255,0.09), transparent 65%);
-      opacity:0.75;
-      pointer-events:none;
-    }
-    .card:hover{
-      transform: translateY(-2px);
-      border-color: rgba(115,255,175,0.20);
-      background: rgba(255,255,255,0.06);
-    }
-    .card h4{
-      margin:0 0 6px;
-      font-size: 16px;
-      letter-spacing: -0.2px;
-      font-weight: 900;
-    }
-    .card p{
-      margin:0;
-      color: rgba(210,230,255,0.72);
-      line-height: 1.6;
-      font-weight: 600;
-    }
+      /* Soft corner glow */
+      .card::after{
+        content:"";
+        position:absolute;
+        inset: -1px;
+        background: radial-gradient(600px 260px at 18% 10%, rgba(120,255,170,0.10), transparent 60%),
+                    radial-gradient(560px 240px at 85% 30%, rgba(130,170,255,0.09), transparent 62%);
+        pointer-events:none;
+      }
 
-    /* Footer CTA */
-    .footer-cta{
-      margin-top: 20px;
-      border-radius: var(--radius2);
-      border: 1px solid rgba(255,255,255,0.12);
-      background: rgba(255,255,255,0.05);
-      padding: 18px 18px;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap: 12px;
-      box-shadow: var(--shadow2);
-      position:relative;
-      overflow:hidden;
-    }
-    .footer-cta::before{
-      content:"";
-      position:absolute;
-      inset:-2px;
-      background: radial-gradient(520px 260px at 70% 30%, rgba(115,255,175,0.14), transparent 60%);
-      opacity:0.75;
-      pointer-events:none;
-    }
-    footer{
-      margin-top: 18px;
-      padding: 14px 2px 0;
-      color: rgba(210,230,255,0.55);
-      display:flex;
-      justify-content:space-between;
-      gap: 10px;
-      flex-wrap:wrap;
-    }
-    footer a{
-      color: rgba(210,230,255,0.70);
-      text-decoration:none;
-      font-weight: 700;
-    }
-    footer a:hover{ text-decoration: underline; }
+      .heroLeft {
+        padding: 30px 28px 24px;
+      }
 
-    /* Responsive */
-    @media (max-width: 980px){
-      .hero{ grid-template-columns: 1fr; }
-      .brand{ min-width: unset; }
-      .navright{ min-width: unset; }
-      h2{ font-size: 48px; }
-      .grid{ grid-template-columns: 1fr; }
-      .navlinks{ display:none; }
-      .hero-left{ padding: 34px 22px; min-height: unset; }
-      .hero-right{ min-height: unset; }
-    }
-  </style>
-</head>
+      .kicker {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 13px;
+        color: rgba(214, 232, 228, 0.78);
+        background: rgba(10,16,14,0.34);
+        border: 1px solid rgba(170,210,198,0.12);
+        padding: 8px 12px;
+        border-radius: 999px;
+      }
+      .dot {
+        width: 8px; height: 8px; border-radius: 999px;
+        background: rgba(120,255,170,0.55);
+        box-shadow: 0 0 18px rgba(120,255,170,0.18);
+      }
 
-<body>
-  <canvas id="matrix"></canvas>
-  <div class="overlay"></div>
+      h1 {
+        margin: 18px 0 10px;
+        font-size: clamp(44px, 5.2vw, 64px);
+        letter-spacing: -0.8px;
+      }
 
-  <header>
-    <div class="nav">
-      <div class="brand">
-        <div class="logo" aria-hidden="true"></div>
-        <div>
-          <h1>AI Platform Labs</h1>
-          <p>Production-grade engineering</p>
-        </div>
-      </div>
+      .lead {
+        margin: 0;
+        color: var(--muted);
+        font-size: 16px;
+        line-height: 1.7;
+        max-width: 68ch;
+      }
 
-      <nav class="navlinks" aria-label="Primary">
-        <a href="#capabilities">Capabilities</a>
-        <a href="#labs">AI Labs</a>
-        <a href="#research">AI Research</a>
-        <a href="#architecture">IT Architecture</a>
-        <a href="#contact">Contact</a>
-      </nav>
+      .heroActions {
+        margin-top: 18px;
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        align-items: center;
+      }
 
-      <div class="navright">
-        <a class="chip" href="mailto:hello@aiplatformlabs.com">hello@aiplatformlabs.com</a>
-        <a class="priceplay-btn" href="https://priceplay.aiplatformlabs.com" target="_blank" rel="noopener">
-          <span class="pill">PricePlay</span>
-          <span>Open</span>
-          <span aria-hidden="true">→</span>
-        </a>
-      </div>
-    </div>
-  </header>
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 16px;
+        border-radius: 999px;
+        border: 1px solid rgba(170,210,198,0.14);
+        background: rgba(10,16,14,0.34);
+        color: rgba(234,244,242,0.92);
+        text-decoration: none;
+        font-weight: 650;
+        transition: transform .18s ease, background .18s ease, border-color .18s ease;
+      }
+      .btn:hover {
+        transform: translateY(-1px);
+        border-color: rgba(170,210,198,0.20);
+        background: rgba(12,18,16,0.40);
+      }
 
-  <main>
-    <div class="hero">
-      <div class="glass hero-left" id="top">
-        <div class="kicker"><span class="dot"></span> Built to ship. Built to scale.</div>
-        <h2>Production.</h2>
-        <p class="lead">
-          AI Platform Labs builds high-quality <strong>SaaS products</strong>, <strong>platform systems</strong>,
-          <strong>applied AI</strong>, and <strong>IT architecture</strong>.
-          We combine real-world delivery discipline with modern product engineering to ship reliable outcomes.
-        </p>
+      .btnPrimary {
+        border-color: rgba(120,255,170,0.18);
+        box-shadow: 0 0 20px rgba(120,255,170,0.10);
+      }
 
-        <div class="cta-row">
-          <a class="btn primary" href="https://priceplay.aiplatformlabs.com" target="_blank" rel="noopener">
-            Launch PricePlay <span aria-hidden="true">→</span>
-          </a>
-          <a class="btn" href="#capabilities">Explore capabilities</a>
-          <a class="btn" href="#contact">Talk to us</a>
-        </div>
+      .chips {
+        margin-top: 14px;
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+      .chip {
+        padding: 8px 10px;
+        border-radius: 999px;
+        background: rgba(10,16,14,0.30);
+        border: 1px solid rgba(170,210,198,0.12);
+        color: rgba(214,232,228,0.72);
+        font-size: 13px;
+      }
 
-        <div class="tags" aria-label="Highlights">
-          <div class="tag">SaaS production discipline</div>
-          <div class="tag">Platform-grade delivery</div>
-          <div class="tag">Security by design</div>
-          <div class="tag">Cloud & automation</div>
-        </div>
-      </div>
+      .heroRight {
+        padding: 18px;
+        display: grid;
+        gap: 12px;
+      }
 
-      <div class="glass hero-right">
-        <div class="panel-card">
-          <div class="panel-row">
-            <div>
-              <p class="panel-title">PricePlay</p>
-              <p class="panel-sub">priceplay.aiplatformlabs.com</p>
+      .mini {
+        background: rgba(10, 16, 14, 0.40);
+        border: 1px solid rgba(170,210,198,0.12);
+        border-radius: var(--radius-lg);
+        padding: 14px 14px;
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        box-shadow: var(--shadowSoft);
+      }
+
+      .mini h3 {
+        margin: 0 0 6px;
+        font-size: 14px;
+        letter-spacing: 0.2px;
+      }
+
+      .mini p {
+        margin: 0;
+        color: rgba(214,232,228,0.72);
+        font-size: 14px;
+        line-height: 1.55;
+      }
+
+      .miniTop {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+      }
+
+      .launchSmall {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 12px;
+        border-radius: 999px;
+        border: 1px solid rgba(120,255,170,0.16);
+        background: rgba(10,16,14,0.40);
+        color: rgba(234,244,242,0.92);
+        text-decoration: none;
+        font-weight: 700;
+        transition: transform .18s ease, border-color .18s ease;
+      }
+      .launchSmall:hover{
+        transform: translateY(-1px);
+        border-color: rgba(120,255,170,0.26);
+      }
+
+      /* Sections */
+      section {
+        padding: 36px 0 10px;
+      }
+
+      .sectionTitle {
+        margin: 0;
+        font-size: 26px;
+        letter-spacing: -0.2px;
+      }
+
+      .sectionSub {
+        margin: 6px 0 18px;
+        color: rgba(214,232,228,0.68);
+        line-height: 1.6;
+        max-width: 78ch;
+      }
+
+      .grid3 {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 14px;
+      }
+
+      .grid2 {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 14px;
+      }
+
+      .tile {
+        padding: 18px 18px;
+        border-radius: var(--radius-lg);
+        background: rgba(10,16,14,0.38);
+        border: 1px solid rgba(170,210,198,0.12);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        box-shadow: var(--shadowSoft);
+        position: relative;
+        overflow: hidden;
+      }
+
+      /* Hover spotlight (subtle) */
+      .tile::before{
+        content:"";
+        position:absolute;
+        inset:-1px;
+        background: radial-gradient(520px 260px at var(--mx, 30%) var(--my, 30%), var(--accLocal, rgba(120,255,170,0.10)), transparent 60%);
+        opacity: 0;
+        transition: opacity .20s ease;
+        pointer-events:none;
+      }
+      .tile:hover::before{ opacity: 1; }
+
+      .tile h4 {
+        margin: 0 0 8px;
+        font-size: 15px;
+        letter-spacing: 0.2px;
+      }
+      .tile p {
+        margin: 0;
+        color: rgba(214,232,228,0.70);
+        line-height: 1.6;
+        font-size: 14px;
+      }
+
+      /* Muted accent for each section header + tiles */
+      .accent-cap { --accLocal: var(--acc-cap); }
+      .accent-labs { --accLocal: var(--acc-labs); }
+      .accent-research { --accLocal: var(--acc-research); }
+      .accent-arch { --accLocal: var(--acc-arch); }
+      .accent-contact { --accLocal: var(--acc-contact); }
+
+      .accent-cap .sectionTitle { color: rgba(234,244,242,0.95); text-shadow: 0 0 22px rgba(120,255,170,0.10); }
+      .accent-labs .sectionTitle { text-shadow: 0 0 22px rgba(130,170,255,0.10); }
+      .accent-research .sectionTitle { text-shadow: 0 0 22px rgba(220,150,255,0.09); }
+      .accent-arch .sectionTitle { text-shadow: 0 0 22px rgba(255,190,120,0.08); }
+      .accent-contact .sectionTitle { text-shadow: 0 0 22px rgba(120,230,255,0.09); }
+
+      /* Footer CTA */
+      .footerCta {
+        margin-top: 18px;
+        padding: 18px 18px;
+        border-radius: var(--radius-xl);
+        background: rgba(10,16,14,0.40);
+        border: 1px solid rgba(170,210,198,0.12);
+        backdrop-filter: blur(18px);
+        -webkit-backdrop-filter: blur(18px);
+        box-shadow: var(--shadowSoft);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        flex-wrap: wrap;
+      }
+
+      .footerCta strong {
+        font-size: 16px;
+      }
+
+      .footerCta span {
+        display: block;
+        color: rgba(214,232,228,0.70);
+        margin-top: 4px;
+      }
+
+      .footerActions {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        align-items: center;
+      }
+
+      footer {
+        padding: 22px 0 34px;
+        color: rgba(214,232,228,0.62);
+        font-size: 13px;
+      }
+
+      .rowFoot {
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        flex-wrap: wrap;
+        align-items: center;
+      }
+
+      .topLink {
+        color: rgba(214,232,228,0.72);
+        text-decoration: none;
+        border: 1px solid rgba(170,210,198,0.12);
+        background: rgba(10,16,14,0.30);
+        padding: 9px 12px;
+        border-radius: 999px;
+      }
+      .topLink:hover{
+        color: rgba(234,244,242,0.92);
+      }
+
+      /* Responsive */
+      @media (max-width: 980px){
+        .heroGrid{ grid-template-columns: 1fr; }
+        .navRight{ min-width: auto; }
+        .brand{ min-width: auto; }
+      }
+      @media (max-width: 860px){
+        .grid3{ grid-template-columns: 1fr; }
+        .grid2{ grid-template-columns: 1fr; }
+        .navLinks{ display:none; }
+      }
+    </style>
+  </head>
+
+  <body>
+    <canvas id="matrix"></canvas>
+    <div class="vignette"></div>
+
+    <div class="wrap" id="top">
+      <!-- NAV -->
+      <div class="nav">
+        <div class="container">
+          <div class="navRow">
+            <div class="brand">
+              <div class="logo" aria-hidden="true"></div>
+              <div class="brandText">
+                <strong>AI Platform Labs</strong>
+                <span>Corporate-grade engineering</span>
+              </div>
             </div>
-            <a class="btn primary" href="https://priceplay.aiplatformlabs.com" target="_blank" rel="noopener">
-              Launch <span aria-hidden="true">→</span>
-            </a>
+
+            <nav class="navLinks" aria-label="Primary">
+              <a href="#capabilities">Capabilities</a>
+              <a href="#labs">AI Labs</a>
+              <a href="#research">AI Research</a>
+              <a href="#architecture">IT Architecture</a>
+              <a href="#contact">Contact</a>
+            </nav>
+
+            <div class="navRight">
+              <a class="pill" href="mailto:hello@aiplatformlabs.com">hello@aiplatformlabs.com</a>
+              <a class="cta" href="https://priceplay.aiplatformlabs.com" target="_blank" rel="noopener">
+                <span class="ctaBadge">PricePlay</span>
+                <span>Open</span>
+                <span class="arrow" aria-hidden="true">→</span>
+              </a>
+            </div>
           </div>
-          <p style="margin:10px 0 0; color: rgba(210,230,255,0.72); font-weight:600; line-height:1.6;">
-            Store onboarding, verification, or pilot city launch? Email
-            <a href="mailto:hello@aiplatformlabs.com" style="color: rgba(235,255,246,0.92); font-weight:800; text-decoration:none;">
-              hello@aiplatformlabs.com
-            </a>.
+        </div>
+      </div>
+
+      <!-- HERO -->
+      <header class="hero">
+        <div class="container">
+          <div class="heroGrid">
+            <div class="card heroLeft">
+              <div class="kicker"><span class="dot"></span> Built to ship. Built to scale.</div>
+
+              <h1>Production.</h1>
+              <p class="lead">
+                AI Platform Labs builds high-quality <b>SaaS products</b>, <b>platform systems</b>,
+                <b>applied AI</b>, and <b>IT architecture</b>. We combine real-world delivery discipline
+                with modern product engineering to ship reliable outcomes.
+              </p>
+
+              <div class="heroActions">
+                <a class="btn btnPrimary" href="https://priceplay.aiplatformlabs.com" target="_blank" rel="noopener">
+                  Launch PricePlay <span class="arrow" aria-hidden="true">→</span>
+                </a>
+                <a class="btn" href="#capabilities">Explore capabilities</a>
+                <a class="btn" href="#contact">Talk to us</a>
+              </div>
+
+              <div class="chips" aria-label="Highlights">
+                <span class="chip">SaaS production discipline</span>
+                <span class="chip">Platform-grade delivery</span>
+                <span class="chip">Security by design</span>
+                <span class="chip">Cloud & automation</span>
+              </div>
+            </div>
+
+            <aside class="card heroRight">
+              <div class="mini">
+                <div class="miniTop">
+                  <div>
+                    <h3 style="margin:0;">PricePlay</h3>
+                    <p style="margin:2px 0 0; color: rgba(214,232,228,0.62); font-size: 13px;">
+                      priceplay.aiplatformlabs.com
+                    </p>
+                  </div>
+                  <a class="launchSmall" href="https://priceplay.aiplatformlabs.com" target="_blank" rel="noopener">
+                    Launch <span class="arrow" aria-hidden="true">→</span>
+                  </a>
+                </div>
+                <p style="margin-top:10px;">
+                  Store onboarding, verification, or a pilot city launch? Email
+                  <b>hello@aiplatformlabs.com</b>.
+                </p>
+              </div>
+
+              <div class="mini">
+                <h3>What we deliver</h3>
+                <p>From roadmap to production: MVP → scale, observability, performance, and cost control.</p>
+                <div class="chips" style="margin-top:10px;">
+                  <span class="chip">MVP → scale</span>
+                  <span class="chip">Observability</span>
+                  <span class="chip">Performance</span>
+                  <span class="chip">Cost control</span>
+                </div>
+              </div>
+
+              <div class="mini">
+                <h3>Operating principles</h3>
+                <p>Reliability & clarity: SLO thinking, secure defaults, clean handover, maintainable systems.</p>
+                <div class="chips" style="margin-top:10px;">
+                  <span class="chip">SLO thinking</span>
+                  <span class="chip">Secure defaults</span>
+                  <span class="chip">Clean handover</span>
+                  <span class="chip">Maintainable systems</span>
+                </div>
+              </div>
+            </aside>
+          </div>
+        </div>
+      </header>
+
+      <!-- CAPABILITIES -->
+      <section id="capabilities" class="accent-cap">
+        <div class="container">
+          <h2 class="sectionTitle">Capabilities</h2>
+          <p class="sectionSub">
+            Corporate-grade delivery across product, platform & infrastructure — designed to scale and stay maintainable.
           </p>
-        </div>
 
-        <div class="panel-card">
-          <p class="panel-title">What we deliver</p>
-          <p class="panel-sub">From roadmap to production</p>
-          <div class="tags" style="margin-top:8px;">
-            <div class="tag">MVP → scale</div>
-            <div class="tag">Observability</div>
-            <div class="tag">Performance</div>
-            <div class="tag">Cost control</div>
+          <div class="grid3">
+            <div class="tile">
+              <h4>SaaS Production</h4>
+              <p>Production-quality builds, release discipline, monitoring, and stability that protect reliability.</p>
+            </div>
+            <div class="tile">
+              <h4>Platform Engineering</h4>
+              <p>Reusable foundations: auth, APIs, data flows, caching, performance, and cost-aware architecture.</p>
+            </div>
+            <div class="tile">
+              <h4>IT Architectural Development</h4>
+              <p>Standards, governance, and scalable patterns that keep systems clean as teams and scope grow.</p>
+            </div>
           </div>
         </div>
+      </section>
 
-        <div class="panel-card">
-          <p class="panel-title">Operating principles</p>
-          <p class="panel-sub">Reliability & clarity</p>
-          <div class="tags" style="margin-top:8px;">
-            <div class="tag">SLO thinking</div>
-            <div class="tag">Secure defaults</div>
-            <div class="tag">Clean handover</div>
-            <div class="tag">Maintainable systems</div>
+      <!-- AI LABS -->
+      <section id="labs" class="accent-labs">
+        <div class="container">
+          <h2 class="sectionTitle">AI Labs</h2>
+          <p class="sectionSub">
+            Applied innovation focused on real delivery — rapid prototyping, productization, and operational readiness.
+          </p>
+
+          <div class="grid3">
+            <div class="tile">
+              <h4>Product Incubation</h4>
+              <p>Idea-to-MVP execution with production quality — design systems, workflows, and scalable foundations.</p>
+            </div>
+            <div class="tile">
+              <h4>Data & Insights</h4>
+              <p>Dashboards, analytics, and decision tooling that improve product outcomes and reduce guesswork.</p>
+            </div>
+            <div class="tile">
+              <h4>Automation</h4>
+              <p>Practical automation to reduce ops load — tooling, scripts, and platform-safe workflows.</p>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
+      </section>
 
-    <!-- Capabilities -->
-    <section id="capabilities">
-      <h3 class="section-title">Capabilities</h3>
-      <p class="section-desc">
-        Corporate-grade delivery across product, platform & infrastructure — designed to scale and stay maintainable.
-      </p>
+      <!-- AI RESEARCH -->
+      <section id="research" class="accent-research">
+        <div class="container">
+          <h2 class="sectionTitle">AI Research</h2>
+          <p class="sectionSub">
+            Focused R&D that turns into product value — evaluation, safety, and deployment-ready approaches.
+          </p>
 
-      <div class="grid">
-        <div class="card">
-          <h4>SaaS Production</h4>
-          <p>Production-quality builds, release discipline, monitoring, and stability that protect reliability.</p>
-        </div>
-        <div class="card">
-          <h4>Platform Engineering</h4>
-          <p>Reusable foundations: auth, APIs, data flows, caching, performance, and cost-aware architecture.</p>
-        </div>
-        <div class="card">
-          <h4>IT Architectural Development</h4>
-          <p>Standards, governance, and scalable patterns that keep systems clean as teams and scope grow.</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- AI Labs -->
-    <section id="labs">
-      <h3 class="section-title">AI Labs</h3>
-      <p class="section-desc">
-        Applied innovation focused on real delivery — rapid prototyping, productization, and operational readiness.
-      </p>
-
-      <div class="grid">
-        <div class="card">
-          <h4>Product Incubation</h4>
-          <p>Idea-to-MVP execution with production quality — design systems, workflows, and scalable foundations.</p>
-        </div>
-        <div class="card">
-          <h4>Data & Insights</h4>
-          <p>Dashboards, analytics, and decision tooling that improve product outcomes and reduce guesswork.</p>
-        </div>
-        <div class="card">
-          <h4>Automation</h4>
-          <p>Practical automation to reduce ops load — tooling, scripts, and platform-safe workflows.</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- AI Research -->
-    <section id="research">
-      <h3 class="section-title">AI Research</h3>
-      <p class="section-desc">
-        Applied research with an engineering mindset — focused on measurable utility and integration into real systems.
-      </p>
-
-      <div class="grid">
-        <div class="card">
-          <h4>Applied Models</h4>
-          <p>Task-focused AI and decision support, designed for low-cost, explainable production usage.</p>
-        </div>
-        <div class="card">
-          <h4>Evaluation & Safety</h4>
-          <p>Practical evaluation: accuracy, bias checks, regressions, and safe deployment patterns.</p>
-        </div>
-        <div class="card">
-          <h4>Human-in-the-loop</h4>
-          <p>Systems that keep humans in control — clear feedback loops and reliable auditability.</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- IT Architecture -->
-    <section id="architecture">
-      <h3 class="section-title">IT Architecture</h3>
-      <p class="section-desc">
-        Structure, governance, and scalable patterns that keep systems maintainable as teams and scope grow.
-      </p>
-
-      <div class="grid">
-        <div class="card">
-          <h4>Architecture & Governance</h4>
-          <p>Clear roles, policies, and scalable patterns that keep systems clean as organizations evolve.</p>
-        </div>
-        <div class="card">
-          <h4>Operational Excellence</h4>
-          <p>Incident readiness, performance practices, and stable deployments that protect reliability.</p>
-        </div>
-        <div class="card">
-          <h4>Documentation & Handover</h4>
-          <p>Systems that can be understood and operated — clean docs, diagrams, and practical runbooks.</p>
-        </div>
-      </div>
-
-      <div class="footer-cta" id="contact">
-        <div>
-          <div style="font-weight:900; font-size:18px;">Let’s build something production-ready.</div>
-          <div style="margin-top:6px; color: rgba(210,230,255,0.72); font-weight:600; line-height:1.6;">
-            For partnerships, product engineering, platform work, or architecture consulting:
-            <a href="mailto:hello@aiplatformlabs.com" style="color: rgba(235,255,246,0.92); font-weight:900; text-decoration:none;">
-              hello@aiplatformlabs.com
-            </a>
+          <div class="grid2">
+            <div class="tile">
+              <h4>Applied AI Systems</h4>
+              <p>Use-case-first AI: retrieval, ranking, assistants, and model integration with clear metrics.</p>
+            </div>
+            <div class="tile">
+              <h4>Evaluation & Reliability</h4>
+              <p>Monitoring, guardrails, and measurable performance — designed for real-world operating conditions.</p>
+            </div>
           </div>
         </div>
-        <div class="cta-row" style="margin:0;">
-          <a class="btn" href="mailto:hello@aiplatformlabs.com">Contact us</a>
-          <a class="btn primary" href="https://priceplay.aiplatformlabs.com" target="_blank" rel="noopener">
-            Open PricePlay <span aria-hidden="true">→</span>
-          </a>
+      </section>
+
+      <!-- IT ARCHITECTURE -->
+      <section id="architecture" class="accent-arch">
+        <div class="container">
+          <h2 class="sectionTitle">IT Architecture</h2>
+          <p class="sectionSub">
+            Structure, governance, and scalable patterns that keep systems maintainable as teams and scope grow.
+          </p>
+
+          <div class="grid3">
+            <div class="tile">
+              <h4>Architecture & Governance</h4>
+              <p>Clear structure, roles, policies, and scalable patterns that keep systems maintainable.</p>
+            </div>
+            <div class="tile">
+              <h4>Operational Excellence</h4>
+              <p>Monitoring, incident readiness, performance practices, and stable deployments that protect reliability.</p>
+            </div>
+            <div class="tile">
+              <h4>Documentation & Handover</h4>
+              <p>Systems that can be understood and operated — clean docs, diagrams, and practical runbooks.</p>
+            </div>
+          </div>
+
+          <div class="footerCta" style="margin-top:16px;">
+            <div>
+              <strong>Let’s build something production-ready.</strong>
+              <span>For partnerships, product engineering, platform work, or architecture consulting: <b>hello@aiplatformlabs.com</b></span>
+            </div>
+            <div class="footerActions">
+              <a class="btn" href="mailto:hello@aiplatformlabs.com">Contact us</a>
+              <a class="btn btnPrimary" href="https://priceplay.aiplatformlabs.com" target="_blank" rel="noopener">
+                Open PricePlay <span class="arrow" aria-hidden="true">→</span>
+              </a>
+            </div>
+          </div>
         </div>
-      </div>
+      </section>
+
+      <!-- CONTACT -->
+      <section id="contact" class="accent-contact">
+        <div class="container">
+          <h2 class="sectionTitle">Contact</h2>
+          <p class="sectionSub">
+            Tell us what you’re building. We’ll reply with a practical plan and next steps.
+          </p>
+
+          <div class="grid2">
+            <div class="tile">
+              <h4>Email</h4>
+              <p><b>hello@aiplatformlabs.com</b><br/>For partnerships, pilots, onboarding, and consulting.</p>
+            </div>
+            <div class="tile">
+              <h4>PricePlay</h4>
+              <p>Launch the platform: <b>priceplay.aiplatformlabs.com</b></p>
+            </div>
+          </div>
+        </div>
+      </section>
 
       <footer>
-        <div>© <span id="yr"></span> AI Platform Labs. All rights reserved.</div>
-        <div><a href="#top">Back to top ↑</a></div>
+        <div class="container">
+          <div class="rowFoot">
+            <div>© <span id="year"></span> AI Platform Labs. All rights reserved.</div>
+            <a class="topLink" href="#top">Back to top ↑</a>
+          </div>
+        </div>
       </footer>
-    </section>
-  </main>
+    </div>
 
-  <script>
-    // Year
-    document.getElementById("yr").textContent = new Date().getFullYear();
+    <script>
+      // Year
+      document.getElementById("year").textContent = new Date().getFullYear();
 
-    // --- Cursor spotlight on glass/cards (premium feel) ---
-    const track = (el) => {
-      el.addEventListener("mousemove", (e) => {
-        const r = el.getBoundingClientRect();
-        const x = ((e.clientX - r.left) / r.width) * 100;
-        const y = ((e.clientY - r.top) / r.height) * 100;
-        el.style.setProperty("--mx", x + "%");
-        el.style.setProperty("--my", y + "%");
+      // Subtle spotlight hover on tiles
+      document.querySelectorAll(".tile").forEach((el) => {
+        el.addEventListener("mousemove", (e) => {
+          const r = el.getBoundingClientRect();
+          const x = ((e.clientX - r.left) / r.width) * 100;
+          const y = ((e.clientY - r.top) / r.height) * 100;
+          el.style.setProperty("--mx", x + "%");
+          el.style.setProperty("--my", y + "%");
+        });
       });
-    };
 
-    document.querySelectorAll(".glass, .card, .panel-card, .footer-cta").forEach(track);
+      // Matrix background: normal speed BUT appears in bursts/intervals + random columns + faded
+      const canvas = document.getElementById("matrix");
+      const ctx = canvas.getContext("2d", { alpha: true });
 
-    // --- Slow-motion Matrix Rain ---
-    const canvas = document.getElementById("matrix");
-    const ctx = canvas.getContext("2d", { alpha: true });
+      let w = 0, h = 0;
+      let fontSize = 16;
+      let cols = 0;
+      let drops = [];
+      const charArr = "アイウエオカキクケコサシスセソタチツテトナニヌネノ0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
 
-    const chars = "アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワ0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    const charArr = chars.split("");
+      function resize() {
+        const dpr = Math.min(window.devicePixelRatio || 1, 2);
+        w = window.innerWidth;
+        h = window.innerHeight;
+        canvas.width = Math.floor(w * dpr);
+        canvas.height = Math.floor(h * dpr);
+        canvas.style.width = w + "px";
+        canvas.style.height = h + "px";
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
-    let w = 0, h = 0, cols = 0, drops = [];
-    const fontSize = 18;                 // visual size
-    const slowStep = 0.45;               // slow motion speed (smaller = slower)
-    const frameIntervalMs = 195;          // slow update rate (bigger = slower)
-    const fadeAlpha = 0.09;              // trail quality (higher = cleaner)
-
-    function resize(){
-      w = canvas.width = window.innerWidth;
-      h = canvas.height = window.innerHeight;
-      cols = Math.floor(w / fontSize);
-      drops = new Array(cols).fill(0).map(() => Math.random() * (h / fontSize));
-    }
-    window.addEventListener("resize", resize);
-    resize();
-
-    let last = performance.now();
-
-    function draw(now){
-      requestAnimationFrame(draw);
-
-      // Throttle frames for a cinematic slow feel
-      if (now - last < frameIntervalMs) return;
-      last = now;
-
-      // background fade for trails
-      ctx.fillStyle = `rgba(0, 0, 0, ${fadeAlpha})`;
-      ctx.fillRect(0, 0, w, h);
-
-      ctx.font = `${fontSize}px Inter, monospace`;
-      ctx.textBaseline = "top";
-
-      for (let i = 0; i < cols; i++){
-        if (Math.random() > 0.18) continue; // only ~18% columns draw per tick (sparser)
-        const text = charArr[(Math.random() * charArr.length) | 0];
-        const x = i * fontSize;
-        const y = drops[i] * fontSize;
-
-        // Slight variation: head is brighter, trail is dimmer
-        ctx.fillStyle = (Math.random() > 0.975) ? "rgba(190, 255, 220, 0.88)" : "rgba(115, 255, 175, 0.42)";
-        ctx.fillText(text, x, y);
-
-        // slow motion advance
-        drops[i] += slowStep;
-
-        // reset with randomness
-        if (y > h && Math.random() > 0.995){
-          drops[i] = -Math.random() * 20;
-        }
+        fontSize = Math.max(14, Math.min(18, Math.floor(w / 90)));
+        cols = Math.floor(w / fontSize);
+        drops = Array(cols).fill(0).map(() => Math.random() * (h / fontSize));
       }
-    }
-    requestAnimationFrame(draw);
-  </script>
-</body>
+
+      window.addEventListener("resize", resize);
+      resize();
+
+      // Burst scheduling: matrix appears in "intervals" instead of continuous rain
+      let burstActive = false;
+      let burstEndsAt = 0;
+      let nextBurstAt = 0;
+
+      function scheduleNextBurst(now) {
+        // Pause between bursts (interval feel)
+        const pause = rand(900, 2200); // 0.9s to 2.2s pause
+        nextBurstAt = now + pause;
+      }
+
+      function startBurst(now) {
+        burstActive = true;
+        burstEndsAt = now + rand(520, 980); // burst duration ~0.5s to 1s
+      }
+
+      function rand(min, max) {
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+      }
+
+      scheduleNextBurst(performance.now());
+
+      function draw(now) {
+        // Fade background (stronger fade = cleaner corporate)
+        // When not active, fade more (so it calms down)
+        const fadeAlpha = burstActive ? 0.12 : 0.20;
+        ctx.fillStyle = `rgba(0, 0, 0, ${fadeAlpha})`;
+        ctx.fillRect(0, 0, w, h);
+
+        // Manage burst state
+        if (!burstActive && now >= nextBurstAt) startBurst(now);
+        if (burstActive && now >= burstEndsAt) {
+          burstActive = false;
+          scheduleNextBurst(now);
+        }
+
+        // Intensity: during burst show more columns; otherwise very few
+        const columnChance = burstActive ? 0.22 : 0.04; // random lines
+        const step = burstActive ? 0.95 : 0.45;         // normal-ish speed in burst, very light movement outside
+
+        ctx.font = `${fontSize}px ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace`;
+
+        // Muted green, faded
+        // Slightly brighter during burst but still subtle
+        const alpha = burstActive ? 0.42 : 0.18;
+        ctx.fillStyle = `rgba(120, 255, 170, ${alpha})`;
+
+        for (let i = 0; i < cols; i++) {
+          if (Math.random() > columnChance) continue; // random places only
+
+          const text = charArr[(Math.random() * charArr.length) | 0];
+          const x = i * fontSize;
+          const y = drops[i] * fontSize;
+
+          ctx.fillText(text, x, y);
+
+          // Move drop
+          drops[i] += step;
+
+          // Reset occasionally (random line starts)
+          if (y > h && Math.random() > 0.985) {
+            drops[i] = Math.random() * -20; // start above screen randomly
+          }
+        }
+
+        requestAnimationFrame(draw);
+      }
+
+      requestAnimationFrame(draw);
+    </script>
+  </body>
 </html>
