@@ -24,9 +24,6 @@
       --shadow: 0 24px 80px rgba(0,0,0,.55);
       --radius: 24px;
       --radius2: 18px;
-      --glowA: rgba(120,150,255,.25);
-      --glowB: rgba(180,120,255,.18);
-      --glowC: rgba(90,255,220,.14);
       --max: 1120px;
     }
 
@@ -42,10 +39,29 @@
         radial-gradient(900px 600px at 30% 120%, rgba(90,255,220,.10), transparent 55%),
         linear-gradient(180deg, var(--bg0), var(--bg1));
       overflow-x:hidden;
+      position:relative;
+    }
+
+    /* Full-site overlay flow (removes any “two-color cut” feel) */
+    body::before{
+      content:"";
+      position:fixed;
+      inset:-200px;
+      pointer-events:none;
+      z-index:0;
+      background:
+        radial-gradient(1400px 900px at 20% 20%, rgba(120,150,255,.10), transparent 60%),
+        radial-gradient(1200px 800px at 85% 25%, rgba(180,120,255,.08), transparent 62%),
+        radial-gradient(1100px 800px at 55% 95%, rgba(90,255,220,.06), transparent 65%),
+        linear-gradient(180deg, rgba(0,0,0,.16), rgba(0,0,0,.00) 45%, rgba(0,0,0,.18));
+      filter: blur(18px);
+      opacity:.9;
+      transform: translateZ(0);
     }
 
     a{color:inherit; text-decoration:none}
     .wrap{max-width:var(--max); margin:0 auto; padding:0 20px}
+    header, main, section, footer { position:relative; z-index:1; }
 
     /* Top header */
     header{
@@ -170,12 +186,12 @@
         radial-gradient(220px 80px at 20% 0%, rgba(120,150,255,.22), transparent 60%),
         radial-gradient(220px 90px at 80% 100%, rgba(180,120,255,.16), transparent 60%);
       filter: blur(10px);
-      opacity:.55;
-      animation: glowPulse 3.2s ease-in-out infinite;
+      opacity:.58;
+      animation: glowPulse 3.6s ease-in-out infinite;
     }
     @keyframes glowPulse{
-      0%,100%{opacity:.48}
-      50%{opacity:.72}
+      0%,100%{opacity:.52}
+      50%{opacity:.78}
     }
 
     /* Burger */
@@ -232,27 +248,28 @@
     }
 
     /* Hero stage (ONE seamless scene) */
-    .hero{
-      padding: 32px 0 26px;
-    }
+    .hero{ padding: 32px 0 26px; }
+
     .stage{
       position:relative;
       border-radius: var(--radius);
-      overflow:hidden; /* keeps canvas + glow inside */
+      overflow:hidden;
       box-shadow: var(--shadow);
       border: 1px solid rgba(255,255,255,.12);
 
-      /* hero.png ONLY applies to this hero stage */
+      /* hero.png ONLY applies here */
       background:
         radial-gradient(900px 520px at 70% 35%, rgba(120,150,255,.22), transparent 60%),
         radial-gradient(750px 460px at 45% 90%, rgba(180,120,255,.18), transparent 62%),
         radial-gradient(650px 420px at 82% 95%, rgba(90,255,220,.12), transparent 58%),
         url("hero.png");
       background-size: cover;
-      background-position: center;
+      /* FIX: lift the image upward so the girl's head is fully visible */
+      background-position: 70% 22%;
+      background-repeat:no-repeat;
     }
 
-    /* Minimal glass overlay + subtle left gradient for text readability (NOT a card) */
+    /* Minimal overlay + subtle left gradient (NOT a card) */
     .stage::before{
       content:"";
       position:absolute;
@@ -263,7 +280,6 @@
         linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
       pointer-events:none;
     }
-    /* Soft vignette to blend edges */
     .stage::after{
       content:"";
       position:absolute;
@@ -271,7 +287,7 @@
       background:
         radial-gradient(1200px 700px at 50% 20%, transparent 55%, rgba(0,0,0,.30) 100%);
       pointer-events:none;
-      opacity:.75;
+      opacity:.78;
       mix-blend-mode: multiply;
     }
 
@@ -282,13 +298,13 @@
       width:100%;
       height:100%;
       pointer-events:none;
-      z-index:2; /* above bg + overlays, below content */
-      opacity:.9;
+      z-index:2;
+      opacity:1;
     }
 
     .stageInner{
       position:relative;
-      z-index:3; /* content above overlays + canvas */
+      z-index:3;
       padding: 46px 46px;
       display:flex;
       align-items:stretch;
@@ -356,11 +372,11 @@
       font-size: 13px;
       border-color: rgba(255,255,255,.18);
     }
-    .btnPrimary .pill{
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      padding: 0;
+    .btnGhost{
+      padding: 12px 16px;
+      font-size: 13px;
+      background: rgba(255,255,255,.04);
+      border-color: rgba(255,255,255,.14);
     }
     .arrow{
       width:18px;height:18px;
@@ -369,14 +385,7 @@
       transform: translateY(1px);
     }
 
-    .btnGhost{
-      padding: 12px 16px;
-      font-size: 13px;
-      background: rgba(255,255,255,.04);
-      border-color: rgba(255,255,255,.14);
-    }
-
-    /* Right side: keep space for the visual without creating a "panel" */
+    /* Right side: reserve space (no panel look) */
     .heroVisual{
       flex: 1;
       min-width: 320px;
@@ -385,7 +394,6 @@
       justify-content:flex-end;
       position:relative;
     }
-    /* A subtle light wash to help the image pop, still seamless */
     .heroVisual::before{
       content:"";
       position:absolute;
@@ -398,20 +406,17 @@
       opacity:.9;
       pointer-events:none;
     }
-    /* Optional invisible spacer; do not show any card or border */
     .visualSpacer{
       width: 420px;
       height: 320px;
       border-radius: 20px;
-      background: transparent; /* IMPORTANT: no panel look */
+      background: transparent;
     }
 
     /* Sections */
     main{padding: 18px 0 56px}
 
-    .section{
-      padding: 22px 0;
-    }
+    .section{ padding: 22px 0; }
     .section h2{
       margin: 0 0 14px;
       font-size: 20px;
@@ -503,6 +508,8 @@
       .heroTitle{font-size: 46px}
       .heroVisual{justify-content:flex-start}
       .visualSpacer{width: 380px; height: 300px;}
+      /* keep head visible on smaller screens */
+      .stage{ background-position: 72% 18%; }
     }
     @media (max-width: 720px){
       .stageInner{
@@ -517,6 +524,8 @@
       .visualSpacer{width: 100%; height: 240px;}
       .grid{grid-template-columns: 1fr}
       .contact{flex-direction:column; align-items:flex-start}
+      /* mobile: shift image up + a bit right so face stays visible */
+      .stage{ background-position: 75% 12%; }
     }
 
     /* Reduce motion support */
@@ -573,7 +582,7 @@
 
   <div id="top"></div>
 
-  <!-- HERO (one seamless stage with hero.png background only here) -->
+  <!-- HERO -->
   <section class="hero">
     <div class="wrap">
       <div class="stage" id="heroStage">
@@ -592,13 +601,11 @@
             <div class="ctaRow">
               <a class="btn btnPrimary" href="https://priceplay.aiplatformlabs.com" target="_blank" rel="noopener">
                 <span class="shine" aria-hidden="true"></span>
-                <span class="pill">
-                  Launch PricePlay
-                  <svg class="arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                    <path d="M5 12h12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                    <path d="M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                  </svg>
-                </span>
+                Launch PricePlay
+                <svg class="arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M5 12h12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                  <path d="M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
               </a>
 
               <a class="btn btnGhost" href="#capabilities">
@@ -608,7 +615,6 @@
             </div>
           </div>
 
-          <!-- No card, no border, no split. Just reserved space so the right side of hero.png remains visible. -->
           <div class="heroVisual" aria-hidden="true">
             <div class="visualSpacer"></div>
           </div>
@@ -815,23 +821,19 @@
     // Burger menu
     const burger = document.getElementById("burger");
     const mobileMenu = document.getElementById("mobileMenu");
-
     function setMenu(open){
       burger.setAttribute("aria-expanded", String(open));
       mobileMenu.style.display = open ? "block" : "none";
     }
-
     burger.addEventListener("click", () => {
       const open = burger.getAttribute("aria-expanded") === "true";
       setMenu(!open);
     });
-
-    // Close menu on link click
     mobileMenu.querySelectorAll("a").forEach(a => {
       a.addEventListener("click", () => setMenu(false));
     });
 
-    // Canvas glow particles (hero only)
+    // Canvas glow particles (hero only) — more visible + multiple slow “blink” glows
     (function(){
       const stage = document.getElementById("heroStage");
       const canvas = document.getElementById("heroParticles");
@@ -840,7 +842,8 @@
       const prefersReduced = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
       let w = 0, h = 0, dpr = Math.max(1, Math.min(2, window.devicePixelRatio || 1));
-      let particles = [];
+      let dots = [];
+      let blooms = [];
       let raf = null;
 
       function resize(){
@@ -856,53 +859,89 @@
 
       function rand(min, max){ return min + Math.random() * (max - min); }
 
-      function makeParticle(){
-        // Small classy dots: keep size subtle, glow soft, fade slow.
-        const r = rand(0.8, 2.2);
-        const x = rand(0, w);
+      function makeDot(){
+        const biasRight = Math.random() < 0.68;
+        const x = biasRight ? rand(w * 0.30, w) : rand(0, w);
         const y = rand(0, h);
-        const speed = rand(0.02, 0.08);
-        const drift = rand(-0.12, 0.12);
-
-        // Bias more particles to the right side (where the hero image focus is), but still random overall.
-        const bias = Math.random();
-        const bx = bias < 0.65 ? rand(w * 0.35, w) : x;
 
         return {
-          x: bx,
-          y,
-          r,
-          vx: drift,
+          x, y,
+          r: rand(0.9, 2.3),
+          vx: rand(-0.10, 0.10),
           vy: rand(-0.06, 0.06),
-          life: rand(0.0, 1.0),
-          speed,
-          hue: rand(205, 285),        // cool premium hues
-          alphaBase: rand(0.12, 0.32)  // visible but classy
+          hue: rand(205, 285),
+          base: rand(0.20, 0.42),         // more visible than before (still classy)
+          phase: rand(0, Math.PI * 2),
+          tw: rand(0.55, 1.05),           // slow twinkle speed
+        };
+      }
+
+      function makeBloom(){
+        // Bigger glow orbs that “blink” slowly (what you asked for)
+        const biasRight = Math.random() < 0.80;
+        const x = biasRight ? rand(w * 0.46, w) : rand(w * 0.25, w);
+        const y = rand(h * 0.10, h * 0.90);
+
+        return {
+          x, y,
+          r: rand(18, 46),
+          hue: rand(205, 285),
+          base: rand(0.08, 0.18),
+          phase: rand(0, Math.PI * 2),
+          blink: rand(0.18, 0.32),        // VERY slow blink speed
+          driftX: rand(-0.05, 0.05),
+          driftY: rand(-0.03, 0.03),
         };
       }
 
       function init(){
-        particles = [];
-        // scale count with area (cap to keep it classy)
-        const count = Math.max(26, Math.min(68, Math.floor((w * h) / 14000)));
-        for(let i=0;i<count;i++) particles.push(makeParticle());
+        dots = [];
+        blooms = [];
+
+        // Dot count scales with area (kept classy but visible)
+        const dotCount = Math.max(42, Math.min(92, Math.floor((w * h) / 10000)));
+        for(let i=0;i<dotCount;i++) dots.push(makeDot());
+
+        // Multiple slow blinking glows
+        const bloomCount = Math.max(6, Math.min(12, Math.floor((w * h) / 65000)));
+        for(let i=0;i<bloomCount;i++) blooms.push(makeBloom());
       }
 
-      function draw(){
+      let t0 = performance.now();
+      function draw(now){
+        const t = (now - t0) / 1000;
         ctx.clearRect(0, 0, w, h);
 
-        // Soft additive feel without blowing out
+        // Additive look without blowing out
         ctx.globalCompositeOperation = "lighter";
 
-        for(const p of particles){
-          p.life += p.speed;
+        // 1) Blooms (slow blinking glows)
+        for(const b of blooms){
+          b.x += b.driftX;
+          b.y += b.driftY;
 
-          // Fade-in then fade-out using a smooth pulse
-          const t = p.life % 1;
-          const fade = t < 0.5 ? (t / 0.5) : (1 - (t - 0.5) / 0.5);
-          const a = p.alphaBase * (0.35 + 0.65 * fade);
+          // wrap gently
+          if(b.x < -80) b.x = w + 80;
+          if(b.x > w + 80) b.x = -80;
+          if(b.y < -80) b.y = h + 80;
+          if(b.y > h + 80) b.y = -80;
 
-          // gentle motion
+          // slow blink curve (smooth, not harsh)
+          const pulse = 0.5 + 0.5 * Math.sin((t * b.blink) * (Math.PI * 2) + b.phase);
+          const a = b.base * (0.55 + 0.90 * pulse);
+
+          const g = ctx.createRadialGradient(b.x, b.y, 0, b.x, b.y, b.r);
+          g.addColorStop(0, `hsla(${b.hue}, 92%, 78%, ${a})`);
+          g.addColorStop(0.35, `hsla(${b.hue}, 92%, 65%, ${a * 0.55})`);
+          g.addColorStop(1, `hsla(${b.hue}, 92%, 55%, 0)`);
+          ctx.fillStyle = g;
+          ctx.beginPath();
+          ctx.arc(b.x, b.y, b.r, 0, Math.PI * 2);
+          ctx.fill();
+        }
+
+        // 2) Dots (subtle twinkle)
+        for(const p of dots){
           p.x += p.vx;
           p.y += p.vy;
 
@@ -912,17 +951,16 @@
           if(p.y < -20) p.y = h + 20;
           if(p.y > h + 20) p.y = -20;
 
-          // Glow dot
+          const tw = 0.5 + 0.5 * Math.sin(t * p.tw + p.phase); // slow twinkle
+          const a = p.base * (0.35 + 0.85 * tw);
+
+          const grad = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.r * 7);
+          grad.addColorStop(0, `hsla(${p.hue}, 92%, 76%, ${a})`);
+          grad.addColorStop(0.35, `hsla(${p.hue}, 92%, 65%, ${a * 0.55})`);
+          grad.addColorStop(1, `hsla(${p.hue}, 92%, 58%, 0)`);
+          ctx.fillStyle = grad;
           ctx.beginPath();
           ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-          ctx.closePath();
-
-          // Inner bright core + outer glow
-          const grad = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.r * 6);
-          grad.addColorStop(0, `hsla(${p.hue}, 90%, 75%, ${a})`);
-          grad.addColorStop(0.35, `hsla(${p.hue}, 90%, 65%, ${a * 0.55})`);
-          grad.addColorStop(1, `hsla(${p.hue}, 90%, 60%, 0)`);
-          ctx.fillStyle = grad;
           ctx.fill();
         }
 
@@ -930,7 +968,7 @@
         raf = requestAnimationFrame(draw);
       }
 
-      // Keep animation only when hero is on screen
+      // Run only when hero is on screen
       let running = false;
       const io = new IntersectionObserver((entries) => {
         for(const e of entries){
@@ -940,7 +978,8 @@
               resize();
               init();
               if(raf) cancelAnimationFrame(raf);
-              draw();
+              t0 = performance.now();
+              draw(t0);
             }
           } else {
             running = false;
@@ -960,23 +999,33 @@
       init();
       io.observe(stage);
 
-      // If reduced motion, render a static single frame (still classy)
+      // Reduced motion: render a single visible frame (no blinking)
       if(prefersReduced){
         resize();
         init();
-        // draw one frame
         ctx.clearRect(0,0,w,h);
-        for(let i=0;i<particles.length;i++){
-          const p = particles[i];
-          const a = p.alphaBase * 0.55;
+        ctx.globalCompositeOperation = "lighter";
+        for(const b of blooms){
+          const a = b.base * 0.70;
+          const g = ctx.createRadialGradient(b.x, b.y, 0, b.x, b.y, b.r);
+          g.addColorStop(0, `hsla(${b.hue}, 92%, 78%, ${a})`);
+          g.addColorStop(1, `hsla(${b.hue}, 92%, 55%, 0)`);
+          ctx.fillStyle = g;
           ctx.beginPath();
-          ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-          const grad = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.r * 6);
-          grad.addColorStop(0, `hsla(${p.hue}, 90%, 75%, ${a})`);
-          grad.addColorStop(1, `hsla(${p.hue}, 90%, 60%, 0)`);
-          ctx.fillStyle = grad;
+          ctx.arc(b.x, b.y, b.r, 0, Math.PI * 2);
           ctx.fill();
         }
+        for(const p of dots){
+          const a = p.base * 0.55;
+          const grad = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.r * 7);
+          grad.addColorStop(0, `hsla(${p.hue}, 92%, 76%, ${a})`);
+          grad.addColorStop(1, `hsla(${p.hue}, 92%, 58%, 0)`);
+          ctx.fillStyle = grad;
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+          ctx.fill();
+        }
+        ctx.globalCompositeOperation = "source-over";
       }
     })();
   </script>
