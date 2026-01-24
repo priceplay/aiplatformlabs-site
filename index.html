@@ -308,19 +308,38 @@
       z-index:3;
       padding: 46px 46px;
       display:flex;
-      align-items:stretch;
+      align-items:flex-end;
       gap: 28px;
       min-height: 460px;
     }
 
+    
     .heroText{
       flex: 1.05;
-      max-width: 560px;
+      max-width: 520px;
       display:flex;
       flex-direction:column;
-      justify-content:center;
-      padding: 8px 0;
+      justify-content:flex-end; /* bottom */
+      padding: 8px 0 10px;
     }
+
+    .heroMiniLabel{
+      margin: 0 0 8px;
+      font-size: 12px;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: rgba(234,240,255,.72);
+      font-weight: 700;
+    }
+
+    .heroMini{
+      margin: 0 0 16px;
+      font-size: 16px;
+      line-height: 1.55;
+      color: rgba(234,240,255,.76);
+      max-width: 58ch;
+    }
+
 
     .kicker{
       display:inline-flex;
@@ -477,14 +496,14 @@
       .stageInner{
         flex-direction:column;
         gap: 12px;
-        padding: 28px 16px 18px;
+        padding: 24px 16px 24px;
         min-height: 360px;          /* was getting too tall; this reduces cropping */
       }
 
       /* 2) Push text a bit DOWN (as you asked) */
       .heroText{
-        padding: 0;
-        margin-top: 28px;           /* move text down */
+        padding: 0 0 10px;
+        margin-top: 0;
         max-width: 92%;
       }
 
@@ -554,9 +573,9 @@
             <a href="#contact">Contact</a>
           </div>
 
-          <a class="btn" href="https://priceplay.aiplatformlabs.com" target="_blank" rel="noopener">
+          <a class="btn" href="https://www.pricearth.com" target="_blank" rel="noopener">
             <span class="shine" aria-hidden="true"></span>
-            PricePlay → Open
+            Pricearth → Open
           </a>
 
           <button class="burger" id="burger" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu">
@@ -572,7 +591,7 @@
           <a href="#ai-research">AI Research</a>
           <a href="#it-architecture">IT Architecture</a>
           <a href="#contact">Contact</a>
-          <a href="https://priceplay.aiplatformlabs.com" target="_blank" rel="noopener">PricePlay → Open</a>
+          <a href="https://www.pricearth.com" target="_blank" rel="noopener">Pricearth → Open</a>
         </div>
       </div>
     </div>
@@ -587,26 +606,19 @@
 
         <div class="stageInner">
           <div class="heroText">
-            <div class="kicker"><span class="dot" aria-hidden="true"></span> Production-ready AI & Platforms</div>
-            <h2 class="heroTitle">Production.</h2>
-            <p class="heroSubtitle">
-              We build AI-enabled products and the engineering foundations behind them—so you can ship faster,
-              operate reliably, and scale with confidence.
+            <p class="heroMiniLabel">AI Platform Labs</p>
+            <p class="heroMini">
+              Production-ready AI &amp; platforms—built to ship faster, operate reliably, and scale with confidence.
             </p>
 
             <div class="ctaRow">
-              <a class="btn btnPrimary" href="https://priceplay.aiplatformlabs.com" target="_blank" rel="noopener">
+              <a class="btn btnPrimary" href="https://www.pricearth.com" target="_blank" rel="noopener">
                 <span class="shine" aria-hidden="true"></span>
-                Launch PricePlay
+                Open Pricearth
                 <svg class="arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true">
                   <path d="M5 12h12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
                   <path d="M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
-              </a>
-
-              <a class="btn btnGhost" href="#capabilities">
-                <span class="shine" aria-hidden="true"></span>
-                Explore capabilities
               </a>
             </div>
           </div>
@@ -802,9 +814,9 @@
               <span class="shine" aria-hidden="true"></span>
               Email us
             </a>
-            <a class="btn btnGhost" href="https://priceplay.aiplatformlabs.com" target="_blank" rel="noopener">
+            <a class="btn btnGhost" href="https://www.pricearth.com" target="_blank" rel="noopener">
               <span class="shine" aria-hidden="true"></span>
-              Open PricePlay
+              Open Pricearth
             </a>
           </div>
         </div>
@@ -814,7 +826,7 @@
         <div class="footRow">
           <div>© <span id="year"></span> AI Platform Labs. All rights reserved.</div>
           <div>
-            <a href="https://priceplay.aiplatformlabs.com" target="_blank" rel="noopener" style="color:rgba(234,240,255,.72)">PricePlay → Open</a>
+            <a href="https://www.pricearth.com" target="_blank" rel="noopener" style="color:rgba(234,240,255,.72)">Pricearth → Open</a>
           </div>
         </div>
       </footer>
